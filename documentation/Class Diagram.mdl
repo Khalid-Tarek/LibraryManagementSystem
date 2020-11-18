@@ -242,8 +242,7 @@
 			type       	"String")
 		    (object ClassAttribute "WRITTEN_BY"
 			quid       	"5FB432BD005E"
-			type       	"Author"
-			quidu      	"5FB4001000C3")
+			type       	"int")
 		    (object ClassAttribute "PUBLISHED_ON"
 			quid       	"5FB4328E0005"
 			type       	"Date")
@@ -256,8 +255,7 @@
 |
 |
 			
-			type       	"Member"
-			quidu      	"5FB3FC82023C")))
+			type       	"int")))
 	    (object Class "Librarian"
 		quid       	"5FB400090394"
 		superclasses 	(list inheritance_relationship_list
@@ -552,8 +550,7 @@
 			label      	"borrowedBook"
 			supplier   	"Logical View::Book"
 			quidu      	"5FB3FE9802E4"
-			client_cardinality 	(value cardinality "0..*")
-			is_navigable 	TRUE)))
+			client_cardinality 	(value cardinality "0..*"))))
 	    (object Association "owns"
 		quid       	"5FB4003F0222"
 		roles      	(list role_list
@@ -569,8 +566,7 @@
 			label      	"ownedBook"
 			supplier   	"Logical View::Book"
 			quidu      	"5FB3FE9802E4"
-			client_cardinality 	(value cardinality "1..*")
-			is_navigable 	TRUE)))
+			client_cardinality 	(value cardinality "1..*"))))
 	    (object Association "$UNNAMED$0"
 		quid       	"5FB41F280354"
 		roles      	(list role_list
@@ -959,7 +955,7 @@
 			    fill_color 	13434879
 			    anchor     	2
 			    nlines     	5
-			    max_width  	938)
+			    max_width  	984)
 			width      	960
 			height     	336
 			annotation 	8
@@ -1018,7 +1014,7 @@
 			quidu      	"5FB3FC82023C"
 			compartment 	(object Compartment
 			    Parent_View 	@15
-			    location   	(109, 708)
+			    location   	(109, 707)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1032,7 +1028,7 @@
 			    fill_color 	13434879
 			    anchor     	2
 			    nlines     	10
-			    max_width  	676)
+			    max_width  	687)
 			width      	696
 			height     	586
 			annotation 	8
@@ -1065,7 +1061,7 @@
 			quidu      	"5FB4001000C3"
 			compartment 	(object Compartment
 			    Parent_View 	@16
-			    location   	(2031, 700)
+			    location   	(2031, 699)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1106,10 +1102,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@18
-			    location   	(55, 1776)
+			    location   	(66, 1781)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	786
+			    max_width  	764
 			    justify    	0
 			    label      	"Book")
 			icon_style 	"Icon"
@@ -1118,7 +1114,7 @@
 			quidu      	"5FB3FE9802E4"
 			compartment 	(object Compartment
 			    Parent_View 	@18
-			    location   	(55, 1837)
+			    location   	(66, 1841)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1132,13 +1128,13 @@
 			    fill_color 	13434879
 			    anchor     	2
 			    nlines     	9
-			    max_width  	783)
-			width      	804
-			height     	536
+			    max_width  	760)
+			width      	782
+			height     	526
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "borrows" @19
-			location   	(448, 1492)
+			location   	(448, 1494)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1150,7 +1146,7 @@
 			    default_color 	TRUE)
 			label      	(object SegLabel @20
 			    Parent_View 	@19
-			    location   	(448, 1495)
+			    location   	(449, 1497)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1175,7 +1171,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "borrowedBy" @21
 				Parent_View 	@19
-				location   	(-1728, 644)
+				location   	(-1728, 646)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1187,7 +1183,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @22
 				    Parent_View 	@21
-				    location   	(295, 1302)
+				    location   	(295, 1303)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1214,7 +1210,7 @@
 				line_style 	0
 				label      	(object SegLabel @23
 				    Parent_View 	@21
-				    location   	(519, 1258)
+				    location   	(519, 1257)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1235,7 +1231,7 @@
 				    orientation 	1))
 			    (object RoleView "borrowedBook" @24
 				Parent_View 	@19
-				location   	(-1728, 644)
+				location   	(-1728, 646)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1247,7 +1243,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @25
 				    Parent_View 	@24
-				    location   	(263, 1682)
+				    location   	(263, 1685)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1274,7 +1270,7 @@
 				line_style 	0
 				label      	(object SegLabel @26
 				    Parent_View 	@24
-				    location   	(504, 1726)
+				    location   	(504, 1731)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1294,7 +1290,7 @@
 				    height     	56
 				    orientation 	0))))
 		    (object AssociationViewNew "owns" @27
-			location   	(2179, 2031)
+			location   	(2173, 2031)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1306,7 +1302,7 @@
 			    default_color 	TRUE)
 			label      	(object SegLabel @28
 			    Parent_View 	@27
-			    location   	(2409, 1671)
+			    location   	(2403, 1671)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1331,7 +1327,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "writtenBy" @29
 				Parent_View 	@27
-				location   	(403, 111)
+				location   	(397, 111)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1368,13 +1364,13 @@
 				client     	@27
 				supplier   	@16
 				vertices   	(list Points
-				    (2179, 2031)
+				    (2173, 2031)
 				    (2417, 2031)
 				    (2416, 941))
 				line_style 	0
 				label      	(object SegLabel @31
 				    Parent_View 	@29
-				    location   	(2467, 1001)
+				    location   	(2467, 1002)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1395,7 +1391,7 @@
 				    orientation 	1))
 			    (object RoleView "ownedBook" @32
 				Parent_View 	@27
-				location   	(403, 111)
+				location   	(397, 111)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1407,7 +1403,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @33
 				    Parent_View 	@32
-				    location   	(1386, 1999)
+				    location   	(1377, 1999)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1434,7 +1430,7 @@
 				line_style 	0
 				label      	(object SegLabel @34
 				    Parent_View 	@32
-				    location   	(926, 2082)
+				    location   	(916, 2082)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1469,7 +1465,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@35
-			    location   	(2969, 164)
+			    location   	(2969, 165)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	1134
@@ -1490,7 +1486,7 @@
 			quidu      	"5FB40078027D"
 			compartment 	(object Compartment
 			    Parent_View 	@35
-			    location   	(2969, 224)
+			    location   	(2969, 225)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1537,7 +1533,7 @@
 			quidu      	"5FB400090394"
 			compartment 	(object Compartment
 			    Parent_View 	@36
-			    location   	(1174, 700)
+			    location   	(1174, 699)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1931,7 +1927,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@61
-			    location   	(2457, 190)
+			    location   	(2457, 191)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	238
@@ -1952,7 +1948,7 @@
 			quidu      	"5FB41E9B0200"
 			compartment 	(object Compartment
 			    Parent_View 	@61
-			    location   	(2457, 250)
+			    location   	(2457, 251)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
