@@ -421,7 +421,7 @@
 				type       	"int"))
 			result     	"List<Book>"
 			concurrency 	"Sequential"
-			opExportControl 	"Public"
+			opExportControl 	"Private"
 			uid        	0)
 		    (object Operation "getPhoneNumbers"
 			quid       	"5FB427C4017E"
@@ -436,7 +436,7 @@
 				type       	"int"))
 			result     	"List<String>"
 			concurrency 	"Sequential"
-			opExportControl 	"Public"
+			opExportControl 	"Private"
 			uid        	0)
 		    (object Operation "getViewableBooks"
 			quid       	"5FB42E5803A8"
@@ -990,6 +990,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
+			ShowOperationSignature 	TRUE
 			location   	(448, 928)
 			font       	(object Font
 			    size       	10
@@ -1002,10 +1003,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@15
-			    location   	(109, 647)
+			    location   	(119, 653)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	678
+			    max_width  	658
 			    justify    	0
 			    label      	"Member")
 			icon_style 	"Icon"
@@ -1014,7 +1015,7 @@
 			quidu      	"5FB3FC82023C"
 			compartment 	(object Compartment
 			    Parent_View 	@15
-			    location   	(109, 707)
+			    location   	(119, 713)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1028,9 +1029,9 @@
 			    fill_color 	13434879
 			    anchor     	2
 			    nlines     	10
-			    max_width  	687)
-			width      	696
-			height     	586
+			    max_width  	655)
+			width      	676
+			height     	574
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::Author" @16
@@ -1128,13 +1129,13 @@
 			    fill_color 	13434879
 			    anchor     	2
 			    nlines     	9
-			    max_width  	760)
+			    max_width  	796)
 			width      	782
 			height     	526
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "borrows" @19
-			location   	(448, 1494)
+			location   	(448, 1491)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1146,7 +1147,7 @@
 			    default_color 	TRUE)
 			label      	(object SegLabel @20
 			    Parent_View 	@19
-			    location   	(449, 1497)
+			    location   	(449, 1494)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1171,7 +1172,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "borrowedBy" @21
 				Parent_View 	@19
-				location   	(-1728, 646)
+				location   	(-1728, 643)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1183,7 +1184,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @22
 				    Parent_View 	@21
-				    location   	(295, 1303)
+				    location   	(295, 1298)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1210,7 +1211,7 @@
 				line_style 	0
 				label      	(object SegLabel @23
 				    Parent_View 	@21
-				    location   	(519, 1257)
+				    location   	(519, 1252)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1231,7 +1232,7 @@
 				    orientation 	1))
 			    (object RoleView "borrowedBook" @24
 				Parent_View 	@19
-				location   	(-1728, 646)
+				location   	(-1728, 643)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1270,7 +1271,7 @@
 				line_style 	0
 				label      	(object SegLabel @26
 				    Parent_View 	@24
-				    location   	(504, 1731)
+				    location   	(504, 1730)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1453,6 +1454,7 @@
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
+			ShowOperationSignature 	TRUE
 			location   	(3536, 624)
 			font       	(object Font
 			    size       	10
@@ -1465,19 +1467,19 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@35
-			    location   	(2969, 165)
+			    location   	(2987, 174)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	1134
+			    max_width  	1098
 			    justify    	0
 			    label      	"DatabaseUtils")
 			stereotype 	(object ItemLabel
 			    Parent_View 	@35
-			    location   	(2969, 115)
+			    location   	(2987, 125)
 			    fill_color 	13434879
 			    anchor     	10
 			    nlines     	1
-			    max_width  	1134
+			    max_width  	1098
 			    justify    	0
 			    label      	"<<utility>>")
 			icon_style 	"Icon"
@@ -1486,7 +1488,7 @@
 			quidu      	"5FB40078027D"
 			compartment 	(object Compartment
 			    Parent_View 	@35
-			    location   	(2969, 225)
+			    location   	(2987, 234)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1500,15 +1502,16 @@
 			    fill_color 	13434879
 			    anchor     	2
 			    nlines     	18
-			    max_width  	1131)
-			width      	1152
-			height     	1042
+			    max_width  	1153)
+			width      	1116
+			height     	1022
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::Librarian" @36
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
+			ShowOperationSignature 	TRUE
 			location   	(1504, 720)
 			font       	(object Font
 			    size       	10
@@ -1521,10 +1524,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@36
-			    location   	(1174, 639)
+			    location   	(1184, 641)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	660
+			    max_width  	640
 			    justify    	0
 			    label      	"Librarian")
 			icon_style 	"Icon"
@@ -1533,7 +1536,7 @@
 			quidu      	"5FB400090394"
 			compartment 	(object Compartment
 			    Parent_View 	@36
-			    location   	(1174, 699)
+			    location   	(1184, 701)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1547,9 +1550,9 @@
 			    fill_color 	13434879
 			    anchor     	2
 			    nlines     	2
-			    max_width  	657)
-			width      	678
-			height     	186
+			    max_width  	636)
+			width      	658
+			height     	182
 			annotation 	8
 			autoResize 	TRUE)
 		    (object InheritView "" @37
