@@ -324,6 +324,19 @@
 	    (object Class_Utility "DatabaseUtils"
 		quid       	"5FB40078027D"
 		stereotype 	"utility"
+		used_nodes 	(list uses_relationship_list
+		    (object Uses_Relationship
+			quid       	"5FB566E70383"
+			supplier   	"Logical View::Member"
+			quidu      	"5FB3FC82023C")
+		    (object Uses_Relationship
+			quid       	"5FB5685100D1"
+			supplier   	"Logical View::Author"
+			quidu      	"5FB4001000C3")
+		    (object Uses_Relationship
+			quid       	"5FB5692000F9"
+			supplier   	"Logical View::Librarian"
+			quidu      	"5FB400090394"))
 		operations 	(list Operations
 		    (object Operation "DatabaseUtils"
 			quid       	"5FB425BC0302"
@@ -393,70 +406,6 @@
 			opExportControl 	"Public"
 			uid        	0
 			quidu      	"5FB3FB100387")
-		    (object Operation "getUserType"
-			quid       	"5FB41F67032A"
-			documentation 	
-|Static
-|Searches the Member, Librarian and Author tables for the given username and returns the corresponding enum, or returns null if the there was no record with the given username.
-			
-			parameters 	(list Parameters
-			    (object Parameter "username"
-				quid       	"5FB422900294"
-				type       	"String"))
-			result     	"UserType"
-			concurrency 	"Sequential"
-			opExportControl 	"Public"
-			uid        	0
-			quidu      	"5FB41E9B0200")
-		    (object Operation "getBorrowedBooks"
-			quid       	"5FB424690159"
-			documentation 	
-|Static
-|Searches the book table and returns a list of books borrowed by the member with the passed member_id.
-|If there are no books borrowed by the member, return an empty list.
-			
-			parameters 	(list Parameters
-			    (object Parameter "memberID"
-				quid       	"5FB425310137"
-				type       	"int"))
-			result     	"List<Book>"
-			concurrency 	"Sequential"
-			opExportControl 	"Private"
-			uid        	0)
-		    (object Operation "getPhoneNumbers"
-			quid       	"5FB427C4017E"
-			documentation 	
-|Static
-|Searches the phone number table and returns a list of phone numbers owned by the member with the passed member_id.
-|If there are no phone numbers for the member, return an empty list.
-			
-			parameters 	(list Parameters
-			    (object Parameter "memberID"
-				quid       	"5FB427C401D9"
-				type       	"int"))
-			result     	"List<String>"
-			concurrency 	"Sequential"
-			opExportControl 	"Private"
-			uid        	0)
-		    (object Operation "getViewableBooks"
-			quid       	"5FB42E5803A8"
-			documentation 	
-|Returns a list of books the user can view
-|
-|If the passed user is:
-|Member: All books the user can borrow (i.e. doesn't already own)
-|Librarian: All books
-|Author: All books they own. 
-			
-			parameters 	(list Parameters
-			    (object Parameter "user"
-				quid       	"5FB4309D019D"
-				type       	"User"
-				quidu      	"5FB3FB100387"))
-			result     	"List<Book>"
-			concurrency 	"Sequential"
-			opExportControl 	"Public"
-			uid        	0)
 		    (object Operation "addBookRecord"
 			quid       	"5FB42E5600D5"
 			documentation 	"Creates a book record with the passed book and adds it to the book table."
@@ -491,6 +440,40 @@
 			result     	"void"
 			concurrency 	"Sequential"
 			opExportControl 	"Public"
+			uid        	0)
+		    (object Operation "getPhoneNumbers"
+			quid       	"5FB427C4017E"
+			documentation 	
+|Static
+|Searches the phone number table and returns a list of phone numbers owned by the member with the passed member_id.
+|If there are no phone numbers for the member, return an empty list.
+			
+			parameters 	(list Parameters
+			    (object Parameter "memberID"
+				quid       	"5FB427C401D9"
+				type       	"int"))
+			result     	"List<String>"
+			concurrency 	"Sequential"
+			opExportControl 	"Private"
+			uid        	0)
+		    (object Operation "getBooks"
+			quid       	"5FB42E5803A8"
+			documentation 	
+|Returns a list of books the user can view
+|
+|If the passed user is:
+|Member: All books the user can borrow (i.e. doesn't already own)
+|Librarian: All books
+|Author: All books they own. 
+			
+			parameters 	(list Parameters
+			    (object Parameter "user"
+				quid       	"5FB4309D019D"
+				type       	"User"
+				quidu      	"5FB3FB100387"))
+			result     	"List<Book>"
+			concurrency 	"Sequential"
+			opExportControl 	"Private"
 			uid        	0))
 		class_attributes 	(list class_attribute_list
 		    (object ClassAttribute "DB_URL"
@@ -509,16 +492,6 @@
 			quid       	"5FB4046C036F"
 			type       	"String"
 			static     	TRUE)))
-	    (object Class "UserType"
-		quid       	"5FB41E9B0200"
-		stereotype 	"enum"
-		class_attributes 	(list class_attribute_list
-		    (object ClassAttribute "Member"
-			quid       	"5FB41EFE026A")
-		    (object ClassAttribute "Librarian"
-			quid       	"5FB41F0B005D")
-		    (object ClassAttribute "Author"
-			quid       	"5FB41F100165")))
 	    (object Class "Front Form"
 		quid       	"5FB451C0017B"
 		stereotype 	"boundary")
@@ -568,102 +541,90 @@
 			quidu      	"5FB3FE9802E4"
 			client_cardinality 	(value cardinality "1..*"))))
 	    (object Association "$UNNAMED$0"
-		quid       	"5FB41F280354"
-		roles      	(list role_list
-		    (object Role "$UNNAMED$1"
-			quid       	"5FB41F29004E"
-			supplier   	"Logical View::DatabaseUtils"
-			quidu      	"5FB40078027D"
-			is_aggregate 	TRUE)
-		    (object Role "$UNNAMED$2"
-			quid       	"5FB41F290173"
-			supplier   	"Logical View::UserType"
-			quidu      	"5FB41E9B0200")))
-	    (object Association "$UNNAMED$3"
 		quid       	"5FB4254A037D"
 		roles      	(list role_list
-		    (object Role "$UNNAMED$4"
+		    (object Role "$UNNAMED$1"
 			quid       	"5FB4254B01AE"
 			supplier   	"Logical View::DatabaseUtils"
 			quidu      	"5FB40078027D"
 			is_aggregate 	TRUE)
-		    (object Role "$UNNAMED$5"
+		    (object Role "$UNNAMED$2"
 			quid       	"5FB4254B0240"
 			supplier   	"Logical View::Book"
 			quidu      	"5FB3FE9802E4")))
-	    (object Association "$UNNAMED$6"
+	    (object Association "$UNNAMED$3"
 		quid       	"5FB451CC032B"
 		roles      	(list role_list
-		    (object Role "$UNNAMED$7"
+		    (object Role "$UNNAMED$4"
 			quid       	"5FB451CD008E"
 			supplier   	"Logical View::Front Form"
 			quidu      	"5FB451C0017B"
 			is_navigable 	TRUE)
-		    (object Role "$UNNAMED$8"
+		    (object Role "$UNNAMED$5"
 			quid       	"5FB451CD00E3"
 			supplier   	"Logical View::Main"
 			quidu      	"5FB4001701BC")))
-	    (object Association "$UNNAMED$9"
+	    (object Association "$UNNAMED$6"
 		quid       	"5FB45226015C"
 		roles      	(list role_list
-		    (object Role "$UNNAMED$10"
+		    (object Role "$UNNAMED$7"
 			quid       	"5FB45226027E"
 			supplier   	"Logical View::BookBase Form"
 			quidu      	"5FB452110118"
 			is_navigable 	TRUE)
-		    (object Role "$UNNAMED$11"
+		    (object Role "$UNNAMED$8"
 			quid       	"5FB4522602F4"
 			supplier   	"Logical View::Front Form"
 			quidu      	"5FB451C0017B"
 			is_navigable 	TRUE)))
-	    (object Association "$UNNAMED$12"
+	    (object Association "$UNNAMED$9"
 		quid       	"5FB45252034F"
 		roles      	(list role_list
-		    (object Role "$UNNAMED$13"
+		    (object Role "$UNNAMED$10"
 			quid       	"5FB4525301A6"
 			supplier   	"Logical View::BookClientEntry Form"
 			quidu      	"5FB452350339"
 			is_navigable 	TRUE)
-		    (object Role "$UNNAMED$14"
+		    (object Role "$UNNAMED$11"
 			quid       	"5FB452530213"
 			supplier   	"Logical View::Front Form"
 			quidu      	"5FB451C0017B"
 			is_navigable 	TRUE)))
-	    (object Association "$UNNAMED$15"
+	    (object Association "$UNNAMED$12"
 		quid       	"5FB4528600A6"
 		roles      	(list role_list
-		    (object Role "$UNNAMED$16"
+		    (object Role "$UNNAMED$13"
 			quid       	"5FB4528602D6"
 			supplier   	"Logical View::UpdateDelete Form"
 			quidu      	"5FB452650280"
 			is_navigable 	TRUE)
-		    (object Role "$UNNAMED$17"
+		    (object Role "$UNNAMED$14"
 			quid       	"5FB452860323"
 			supplier   	"Logical View::Front Form"
 			quidu      	"5FB451C0017B"
 			is_navigable 	TRUE)))
-	    (object Association "$UNNAMED$18"
+	    (object Association "$UNNAMED$15"
 		quid       	"5FB452AD0325"
 		roles      	(list role_list
-		    (object Role "$UNNAMED$19"
+		    (object Role "$UNNAMED$16"
 			quid       	"5FB452AE0185"
 			supplier   	"Logical View::UpdateDelete Form"
 			quidu      	"5FB452650280"
 			is_navigable 	TRUE)
-		    (object Role "$UNNAMED$20"
+		    (object Role "$UNNAMED$17"
 			quid       	"5FB452AE01A5"
 			supplier   	"Logical View::BookClientEntry Form"
 			quidu      	"5FB452350339"
 			is_navigable 	TRUE)))
-	    (object Association "$UNNAMED$21"
+	    (object Association "$UNNAMED$18"
 		quid       	"5FB452B1001F"
 		roles      	(list role_list
-		    (object Role "$UNNAMED$22"
+		    (object Role "$UNNAMED$19"
 			quid       	"5FB452B101B6"
 			supplier   	"Logical View::BookBase Form"
 			quidu      	"5FB452110118"
 			is_navigable 	TRUE)
-		    (object Role "$UNNAMED$23"
+		    (object Role "$UNNAMED$20"
 			quid       	"5FB452B1021F"
 			supplier   	"Logical View::BookClientEntry Form"
 			quidu      	"5FB452350339"
@@ -1147,7 +1108,7 @@
 			    default_color 	TRUE)
 			label      	(object SegLabel @20
 			    Parent_View 	@19
-			    location   	(449, 1494)
+			    location   	(529, 1493)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1163,8 +1124,8 @@
 			    max_width  	149
 			    justify    	0
 			    label      	"borrows"
-			    pctDist    	0.516667
-			    height     	3
+			    pctDist    	1.850000
+			    height     	2
 			    orientation 	1)
 			stereotype 	TRUE
 			line_color 	3342489
@@ -1291,7 +1252,7 @@
 				    height     	56
 				    orientation 	0))))
 		    (object AssociationViewNew "owns" @27
-			location   	(2173, 2031)
+			location   	(2170, 2030)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1303,7 +1264,7 @@
 			    default_color 	TRUE)
 			label      	(object SegLabel @28
 			    Parent_View 	@27
-			    location   	(2403, 1671)
+			    location   	(2328, 1960)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1319,8 +1280,8 @@
 			    max_width  	450
 			    justify    	0
 			    label      	"owns"
-			    pctDist    	4.350000
-			    height     	361
+			    pctDist    	3.133333
+			    height     	70
 			    orientation 	0)
 			stereotype 	TRUE
 			line_color 	3342489
@@ -1328,7 +1289,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "writtenBy" @29
 				Parent_View 	@27
-				location   	(397, 111)
+				location   	(394, 110)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1340,7 +1301,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @30
 				    Parent_View 	@29
-				    location   	(2304, 1097)
+				    location   	(2287, 981)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1356,8 +1317,8 @@
 				    max_width  	202
 				    justify    	0
 				    label      	"+writtenBy"
-				    pctDist    	0.883552
-				    height     	113
+				    pctDist    	0.969794
+				    height     	128
 				    orientation 	0)
 				stereotype 	TRUE
 				line_color 	3342489
@@ -1365,13 +1326,13 @@
 				client     	@27
 				supplier   	@16
 				vertices   	(list Points
-				    (2173, 2031)
-				    (2417, 2031)
-				    (2416, 941))
+				    (2170, 2030)
+				    (2413, 2030)
+				    (2415, 941))
 				line_style 	0
 				label      	(object SegLabel @31
 				    Parent_View 	@29
-				    location   	(2467, 1002)
+				    location   	(2457, 979)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1387,12 +1348,12 @@
 				    max_width  	15
 				    justify    	0
 				    label      	"1"
-				    pctDist    	0.954500
-				    height     	51
+				    pctDist    	0.971529
+				    height     	42
 				    orientation 	1))
 			    (object RoleView "ownedBook" @32
 				Parent_View 	@27
-				location   	(397, 111)
+				location   	(394, 110)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1404,7 +1365,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @33
 				    Parent_View 	@32
-				    location   	(1377, 1999)
+				    location   	(1090, 1969)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1420,8 +1381,8 @@
 				    max_width  	239
 				    justify    	0
 				    label      	"+ownedBook"
-				    pctDist    	0.597661
-				    height     	33
+				    pctDist    	0.812346
+				    height     	63
 				    orientation 	1)
 				stereotype 	TRUE
 				line_color 	3342489
@@ -1451,11 +1412,10 @@
 				    height     	51
 				    orientation 	0))))
 		    (object ClassView "ClassUtility" "Logical View::DatabaseUtils" @35
-			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
 			IncludeOperation 	TRUE
 			ShowOperationSignature 	TRUE
-			location   	(3536, 624)
+			location   	(3520, 784)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1467,7 +1427,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@35
-			    location   	(2987, 174)
+			    location   	(2971, 383)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	1098
@@ -1475,7 +1435,7 @@
 			    label      	"DatabaseUtils")
 			stereotype 	(object ItemLabel
 			    Parent_View 	@35
-			    location   	(2987, 125)
+			    location   	(2971, 334)
 			    fill_color 	13434879
 			    anchor     	10
 			    nlines     	1
@@ -1488,7 +1448,7 @@
 			quidu      	"5FB40078027D"
 			compartment 	(object Compartment
 			    Parent_View 	@35
-			    location   	(2987, 234)
+			    location   	(2971, 443)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1501,10 +1461,10 @@
 			    icon_style 	"Icon"
 			    fill_color 	13434879
 			    anchor     	2
-			    nlines     	18
+			    nlines     	16
 			    max_width  	1153)
 			width      	1116
-			height     	1022
+			height     	924
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::Librarian" @36
@@ -1623,7 +1583,7 @@
 			height     	154
 			annotation 	8
 			autoResize 	TRUE)
-		    (object AssociationViewNew "$UNNAMED$6" @40
+		    (object AssociationViewNew "$UNNAMED$3" @40
 			location   	(3084, 2000)
 			font       	(object Font
 			    size       	10
@@ -1638,7 +1598,7 @@
 			line_color 	3342489
 			quidu      	"5FB451CC032B"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$7" @41
+			    (object RoleView "$UNNAMED$4" @41
 				Parent_View 	@40
 				location   	(1932, -16)
 				stereotype 	TRUE
@@ -1647,7 +1607,7 @@
 				client     	@40
 				supplier   	@39
 				line_style 	0)
-			    (object RoleView "$UNNAMED$8" @42
+			    (object RoleView "$UNNAMED$5" @42
 				Parent_View 	@40
 				location   	(1932, -16)
 				stereotype 	TRUE
@@ -1687,7 +1647,7 @@
 			height     	154
 			annotation 	8
 			autoResize 	TRUE)
-		    (object AssociationViewNew "$UNNAMED$15" @44
+		    (object AssociationViewNew "$UNNAMED$12" @44
 			location   	(3631, 2000)
 			font       	(object Font
 			    size       	10
@@ -1702,7 +1662,7 @@
 			line_color 	3342489
 			quidu      	"5FB4528600A6"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$16" @45
+			    (object RoleView "$UNNAMED$13" @45
 				Parent_View 	@44
 				location   	(1999, -16)
 				stereotype 	TRUE
@@ -1711,7 +1671,7 @@
 				client     	@44
 				supplier   	@43
 				line_style 	0)
-			    (object RoleView "$UNNAMED$17" @46
+			    (object RoleView "$UNNAMED$14" @46
 				Parent_View 	@44
 				location   	(1999, -16)
 				stereotype 	TRUE
@@ -1751,7 +1711,7 @@
 			height     	154
 			annotation 	8
 			autoResize 	TRUE)
-		    (object AssociationViewNew "$UNNAMED$9" @48
+		    (object AssociationViewNew "$UNNAMED$6" @48
 			location   	(3344, 1836)
 			font       	(object Font
 			    size       	10
@@ -1766,7 +1726,7 @@
 			line_color 	3342489
 			quidu      	"5FB45226015C"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$10" @49
+			    (object RoleView "$UNNAMED$7" @49
 				Parent_View 	@48
 				location   	(1712, -180)
 				stereotype 	TRUE
@@ -1775,7 +1735,7 @@
 				client     	@48
 				supplier   	@47
 				line_style 	0)
-			    (object RoleView "$UNNAMED$11" @50
+			    (object RoleView "$UNNAMED$8" @50
 				Parent_View 	@48
 				location   	(1712, -180)
 				stereotype 	TRUE
@@ -1815,7 +1775,7 @@
 			height     	154
 			annotation 	8
 			autoResize 	TRUE)
-		    (object AssociationViewNew "$UNNAMED$12" @52
+		    (object AssociationViewNew "$UNNAMED$9" @52
 			location   	(3581, 1818)
 			font       	(object Font
 			    size       	10
@@ -1830,7 +1790,7 @@
 			line_color 	3342489
 			quidu      	"5FB45252034F"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$13" @53
+			    (object RoleView "$UNNAMED$10" @53
 				Parent_View 	@52
 				location   	(1949, -198)
 				stereotype 	TRUE
@@ -1839,7 +1799,7 @@
 				client     	@52
 				supplier   	@51
 				line_style 	0)
-			    (object RoleView "$UNNAMED$14" @54
+			    (object RoleView "$UNNAMED$11" @54
 				Parent_View 	@52
 				location   	(1949, -198)
 				stereotype 	TRUE
@@ -1848,7 +1808,7 @@
 				client     	@52
 				supplier   	@39
 				line_style 	0)))
-		    (object AssociationViewNew "$UNNAMED$18" @55
+		    (object AssociationViewNew "$UNNAMED$15" @55
 			location   	(3920, 1836)
 			font       	(object Font
 			    size       	10
@@ -1863,7 +1823,7 @@
 			line_color 	3342489
 			quidu      	"5FB452AD0325"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$19" @56
+			    (object RoleView "$UNNAMED$16" @56
 				Parent_View 	@55
 				location   	(1728, 188)
 				stereotype 	TRUE
@@ -1872,7 +1832,7 @@
 				client     	@55
 				supplier   	@43
 				line_style 	0)
-			    (object RoleView "$UNNAMED$20" @57
+			    (object RoleView "$UNNAMED$17" @57
 				Parent_View 	@55
 				location   	(1728, 188)
 				stereotype 	TRUE
@@ -1881,7 +1841,7 @@
 				client     	@55
 				supplier   	@51
 				line_style 	0)))
-		    (object AssociationViewNew "$UNNAMED$21" @58
+		    (object AssociationViewNew "$UNNAMED$18" @58
 			location   	(3631, 1568)
 			font       	(object Font
 			    size       	10
@@ -1896,7 +1856,7 @@
 			line_color 	3342489
 			quidu      	"5FB452B1001F"
 			roleview_list 	(list RoleViews
-			    (object RoleView "$UNNAMED$22" @59
+			    (object RoleView "$UNNAMED$19" @59
 				Parent_View 	@58
 				location   	(1439, -80)
 				stereotype 	TRUE
@@ -1905,7 +1865,7 @@
 				client     	@58
 				supplier   	@47
 				line_style 	0)
-			    (object RoleView "$UNNAMED$23" @60
+			    (object RoleView "$UNNAMED$20" @60
 				Parent_View 	@58
 				location   	(1439, -80)
 				stereotype 	TRUE
@@ -1914,13 +1874,16 @@
 				client     	@58
 				supplier   	@51
 				line_style 	0)))
-		    (object ClassView "Class" "Logical View::UserType" @61
-			ShowCompartmentStereotypes 	TRUE
-			SuppressOperation 	TRUE
-			IncludeAttribute 	TRUE
-			location   	(2576, 288)
+		    (object InheritView "" @61
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"5FB3FFA60342"
+			client     	@15
+			supplier   	@13
+			line_style 	0)
+		    (object UsesView "" @62
 			font       	(object Font
-			    size       	10
+			    size       	12
 			    face       	"Arial"
 			    bold       	FALSE
 			    italics    	FALSE
@@ -1928,54 +1891,35 @@
 			    strike     	FALSE
 			    color      	0
 			    default_color 	TRUE)
-			label      	(object ItemLabel
-			    Parent_View 	@61
-			    location   	(2457, 191)
-			    fill_color 	13434879
-			    nlines     	1
-			    max_width  	238
-			    justify    	0
-			    label      	"UserType")
-			stereotype 	(object ItemLabel
-			    Parent_View 	@61
-			    location   	(2457, 141)
-			    fill_color 	13434879
-			    anchor     	10
-			    nlines     	1
-			    max_width  	238
-			    justify    	0
-			    label      	"<<enum>>")
-			icon_style 	"Icon"
-			line_color 	3342489
-			fill_color 	13434879
-			quidu      	"5FB41E9B0200"
-			compartment 	(object Compartment
-			    Parent_View 	@61
-			    location   	(2457, 251)
-			    font       	(object Font
-				size       	10
-				face       	"Arial"
-				bold       	FALSE
-				italics    	FALSE
-				underline  	FALSE
-				strike     	FALSE
-				color      	0
-				default_color 	TRUE)
-			    icon_style 	"Icon"
-			    fill_color 	13434879
-			    anchor     	2
-			    nlines     	3
-			    max_width  	236)
-			width      	256
-			height     	318
-			annotation 	8
-			autoResize 	TRUE)
-		    (object InheritView "" @62
 			stereotype 	TRUE
 			line_color 	3342489
-			quidu      	"5FB3FFA60342"
-			client     	@15
-			supplier   	@13
+			quidu      	"5FB566E70383"
+			client     	@35
+			supplier   	@15
+			vertices   	(list Points
+			    (3503, 1246)
+			    (3501, 1326)
+			    (877, 1326)
+			    (757, 1215))
+			line_style 	0)
+		    (object UsesView "" @63
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"5FB5692000F9"
+			client     	@35
+			supplier   	@36
+			vertices   	(list Points
+			    (2961, 1052)
+			    (2797, 1134)
+			    (1502, 1134)
+			    (1503, 811))
+			line_style 	0)
+		    (object UsesView "" @64
+			stereotype 	TRUE
+			line_color 	3342489
+			quidu      	"5FB5685100D1"
+			client     	@35
+			supplier   	@16
 			line_style 	0)))))
     root_subsystem 	(object SubSystem "Component View"
 	quid       	"39C9260C00D7"
