@@ -344,7 +344,7 @@
 			concurrency 	"Sequential"
 			opExportControl 	"Private"
 			uid        	0)
-		    (object Operation "Authenticate"
+		    (object Operation "authenticate"
 			quid       	"5FB41F34034E"
 			documentation 	
 |Static
@@ -441,6 +441,12 @@
 			concurrency 	"Sequential"
 			opExportControl 	"Public"
 			uid        	0)
+		    (object Operation "initConnection"
+			quid       	"5FB6C00401BF"
+			result     	"void"
+			concurrency 	"Sequential"
+			opExportControl 	"Private"
+			uid        	0)
 		    (object Operation "getPhoneNumbers"
 			quid       	"5FB427C4017E"
 			documentation 	
@@ -476,10 +482,6 @@
 			opExportControl 	"Private"
 			uid        	0))
 		class_attributes 	(list class_attribute_list
-		    (object ClassAttribute "DB_URL"
-			quid       	"5FB404350255"
-			type       	"String"
-			static     	TRUE)
 		    (object ClassAttribute "DB_NAME"
 			quid       	"5FB404560104"
 			type       	"String"
@@ -490,6 +492,14 @@
 			static     	TRUE)
 		    (object ClassAttribute "PASSWORD"
 			quid       	"5FB4046C036F"
+			type       	"String"
+			static     	TRUE)
+		    (object ClassAttribute "con"
+			quid       	"5FB6CEDD039E"
+			type       	"Connection"
+			static     	TRUE)
+		    (object ClassAttribute "DB_URL"
+			quid       	"5FB404350255"
 			type       	"String"
 			static     	TRUE)))
 	    (object Class "Front Form"
@@ -990,7 +1000,7 @@
 			    fill_color 	13434879
 			    anchor     	2
 			    nlines     	10
-			    max_width  	655)
+			    max_width  	693)
 			width      	676
 			height     	574
 			annotation 	8
@@ -1427,19 +1437,19 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@35
-			    location   	(2971, 383)
+			    location   	(2972, 334)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	1098
+			    max_width  	1096
 			    justify    	0
 			    label      	"DatabaseUtils")
 			stereotype 	(object ItemLabel
 			    Parent_View 	@35
-			    location   	(2971, 334)
+			    location   	(2972, 285)
 			    fill_color 	13434879
 			    anchor     	10
 			    nlines     	1
-			    max_width  	1098
+			    max_width  	1096
 			    justify    	0
 			    label      	"<<utility>>")
 			icon_style 	"Icon"
@@ -1448,7 +1458,7 @@
 			quidu      	"5FB40078027D"
 			compartment 	(object Compartment
 			    Parent_View 	@35
-			    location   	(2971, 443)
+			    location   	(2972, 394)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1461,10 +1471,10 @@
 			    icon_style 	"Icon"
 			    fill_color 	13434879
 			    anchor     	2
-			    nlines     	16
-			    max_width  	1153)
-			width      	1116
-			height     	924
+			    nlines     	18
+			    max_width  	1092)
+			width      	1114
+			height     	1022
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::Librarian" @36
@@ -1510,7 +1520,7 @@
 			    fill_color 	13434879
 			    anchor     	2
 			    nlines     	2
-			    max_width  	636)
+			    max_width  	675)
 			width      	658
 			height     	182
 			annotation 	8
@@ -1897,10 +1907,10 @@
 			client     	@35
 			supplier   	@15
 			vertices   	(list Points
-			    (3503, 1246)
-			    (3501, 1326)
-			    (877, 1326)
-			    (757, 1215))
+			    (3517, 1295)
+			    (3517, 1424)
+			    (975, 1424)
+			    (753, 1215))
 			line_style 	0)
 		    (object UsesView "" @63
 			stereotype 	TRUE
@@ -1909,7 +1919,7 @@
 			client     	@35
 			supplier   	@36
 			vertices   	(list Points
-			    (2961, 1052)
+			    (2962, 1052)
 			    (2797, 1134)
 			    (1502, 1134)
 			    (1503, 811))
