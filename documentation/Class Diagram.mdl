@@ -222,10 +222,19 @@
 		    (object Operation "setBorrowedBy"
 			quid       	"5FB442B10241"
 			parameters 	(list Parameters
-			    (object Parameter "member"
-				quid       	"5FB442CA0061"
-				type       	"Member"
-				quidu      	"5FB3FC82023C"))
+			    (object Parameter "memberID"
+				quid       	"5FB6FC3602E7"
+				type       	"int"))
+			result     	"void"
+			concurrency 	"Sequential"
+			opExportControl 	"Public"
+			uid        	0)
+		    (object Operation "setFinePayed"
+			quid       	"5FB6FC1702BA"
+			parameters 	(list Parameters
+			    (object Parameter "finePayed"
+				quid       	"5FB6FC4F0012"
+				type       	"boolean"))
 			result     	"void"
 			concurrency 	"Sequential"
 			opExportControl 	"Public"
@@ -255,7 +264,10 @@
 |
 |
 			
-			type       	"int")))
+			type       	"int")
+		    (object ClassAttribute "finePayed"
+			quid       	"5FB6FC0803BF"
+			type       	"boolean")))
 	    (object Class "Librarian"
 		quid       	"5FB400090394"
 		superclasses 	(list inheritance_relationship_list
@@ -882,7 +894,7 @@
 		max_height 	28350
 		max_width  	21600
 		origin_x   	0
-		origin_y   	0
+		origin_y   	98
 		items      	(list diagram_item_list
 		    (object ClassView "Class" "Logical View::User" @13
 			IncludeAttribute 	TRUE
@@ -932,7 +944,7 @@
 			annotation 	8
 			autoResize 	TRUE)
 		    (object NoteView @14
-			location   	(480, 272)
+			location   	(480, 288)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -944,19 +956,19 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@14
-			    location   	(42, 89)
+			    location   	(44, 91)
 			    fill_color 	13434879
-			    nlines     	6
-			    max_width  	840
+			    nlines     	8
+			    max_width  	836
 			    label      	
-|All normal classes have getters for all fields (no setters, except setBorrowed by() )
+|All normal classes have getters for all fields (no setters, except for setborrowedBy() and setFinePayed() in the Book Class)
 |
 |Also all classes have standard constructors that initialize all its fields with the passed parameters.
 			    )
 			line_color 	3342489
 			fill_color 	13434879
-			width      	900
-			height     	378)
+			width      	896
+			height     	406)
 		    (object ClassView "Class" "Logical View::Member" @15
 			ShowCompartmentStereotypes 	TRUE
 			IncludeAttribute 	TRUE
@@ -1021,10 +1033,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@16
-			    location   	(2031, 639)
+			    location   	(2072, 656)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	770
+			    max_width  	688
 			    justify    	0
 			    label      	"Author")
 			icon_style 	"Icon"
@@ -1033,7 +1045,7 @@
 			quidu      	"5FB4001000C3"
 			compartment 	(object Compartment
 			    Parent_View 	@16
-			    location   	(2031, 699)
+			    location   	(2072, 716)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1047,10 +1059,11 @@
 			    fill_color 	13434879
 			    anchor     	2
 			    nlines     	4
-			    max_width  	767)
-			width      	788
-			height     	314
-			annotation 	8)
+			    max_width  	685)
+			width      	706
+			height     	280
+			annotation 	8
+			autoResize 	TRUE)
 		    (object InheritView "" @17
 			stereotype 	TRUE
 			line_color 	3342489
@@ -1074,10 +1087,10 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@18
-			    location   	(66, 1781)
+			    location   	(59, 1733)
 			    fill_color 	13434879
 			    nlines     	1
-			    max_width  	764
+			    max_width  	778
 			    justify    	0
 			    label      	"Book")
 			icon_style 	"Icon"
@@ -1086,7 +1099,7 @@
 			quidu      	"5FB3FE9802E4"
 			compartment 	(object Compartment
 			    Parent_View 	@18
-			    location   	(66, 1841)
+			    location   	(59, 1793)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1099,14 +1112,14 @@
 			    icon_style 	"Icon"
 			    fill_color 	13434879
 			    anchor     	2
-			    nlines     	9
-			    max_width  	796)
-			width      	782
-			height     	526
+			    nlines     	11
+			    max_width  	775)
+			width      	796
+			height     	622
 			annotation 	8
 			autoResize 	TRUE)
 		    (object AssociationViewNew "borrows" @19
-			location   	(448, 1491)
+			location   	(448, 1467)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1118,7 +1131,7 @@
 			    default_color 	TRUE)
 			label      	(object SegLabel @20
 			    Parent_View 	@19
-			    location   	(529, 1493)
+			    location   	(529, 1469)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1143,7 +1156,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "borrowedBy" @21
 				Parent_View 	@19
-				location   	(-1728, 643)
+				location   	(-1728, 619)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1155,7 +1168,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @22
 				    Parent_View 	@21
-				    location   	(295, 1298)
+				    location   	(295, 1291)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1182,7 +1195,7 @@
 				line_style 	0
 				label      	(object SegLabel @23
 				    Parent_View 	@21
-				    location   	(519, 1252)
+				    location   	(519, 1248)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1203,7 +1216,7 @@
 				    orientation 	1))
 			    (object RoleView "borrowedBook" @24
 				Parent_View 	@19
-				location   	(-1728, 643)
+				location   	(-1728, 619)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1215,7 +1228,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @25
 				    Parent_View 	@24
-				    location   	(263, 1685)
+				    location   	(263, 1644)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1242,7 +1255,7 @@
 				line_style 	0
 				label      	(object SegLabel @26
 				    Parent_View 	@24
-				    location   	(504, 1730)
+				    location   	(504, 1686)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1262,7 +1275,7 @@
 				    height     	56
 				    orientation 	0))))
 		    (object AssociationViewNew "owns" @27
-			location   	(2170, 2030)
+			location   	(2182, 2029)
 			font       	(object Font
 			    size       	10
 			    face       	"Arial"
@@ -1274,7 +1287,7 @@
 			    default_color 	TRUE)
 			label      	(object SegLabel @28
 			    Parent_View 	@27
-			    location   	(2328, 1960)
+			    location   	(2339, 1960)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1299,7 +1312,7 @@
 			roleview_list 	(list RoleViews
 			    (object RoleView "writtenBy" @29
 				Parent_View 	@27
-				location   	(394, 110)
+				location   	(406, 109)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1311,7 +1324,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @30
 				    Parent_View 	@29
-				    location   	(2287, 981)
+				    location   	(2288, 964)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1336,13 +1349,13 @@
 				client     	@27
 				supplier   	@16
 				vertices   	(list Points
-				    (2170, 2030)
-				    (2413, 2030)
-				    (2415, 941))
+				    (2182, 2029)
+				    (2413, 2029)
+				    (2415, 924))
 				line_style 	0
 				label      	(object SegLabel @31
 				    Parent_View 	@29
-				    location   	(2457, 979)
+				    location   	(2457, 962)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1363,7 +1376,7 @@
 				    orientation 	1))
 			    (object RoleView "ownedBook" @32
 				Parent_View 	@27
-				location   	(394, 110)
+				location   	(406, 109)
 				font       	(object Font
 				    size       	10
 				    face       	"Arial"
@@ -1375,7 +1388,7 @@
 				    default_color 	TRUE)
 				label      	(object SegLabel @33
 				    Parent_View 	@32
-				    location   	(1090, 1969)
+				    location   	(1098, 1969)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1402,7 +1415,7 @@
 				line_style 	0
 				label      	(object SegLabel @34
 				    Parent_View 	@32
-				    location   	(916, 2082)
+				    location   	(923, 2082)
 				    font       	(object Font
 					size       	10
 					face       	"Arial"
@@ -1437,7 +1450,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@35
-			    location   	(2972, 334)
+			    location   	(2972, 335)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	1096
@@ -1458,7 +1471,7 @@
 			quidu      	"5FB40078027D"
 			compartment 	(object Compartment
 			    Parent_View 	@35
-			    location   	(2972, 394)
+			    location   	(2972, 395)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -1472,7 +1485,7 @@
 			    fill_color 	13434879
 			    anchor     	2
 			    nlines     	18
-			    max_width  	1092)
+			    max_width  	1146)
 			width      	1114
 			height     	1022
 			annotation 	8
