@@ -29,71 +29,71 @@ public class LogIn extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        User = new javax.swing.JTextField();
-        Pass = new javax.swing.JPasswordField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        loginButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
+        infoButton = new javax.swing.JButton();
+        userTF = new javax.swing.JTextField();
+        passTF = new javax.swing.JPasswordField();
+        userLabel = new javax.swing.JLabel();
+        passLabel = new javax.swing.JLabel();
+        backgroundLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setLayout(null);
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton3.setText("Log In");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        loginButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        loginButton.setText("Log In");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                loginButtonActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton3);
-        jButton3.setBounds(350, 240, 250, 30);
+        jPanel2.add(loginButton);
+        loginButton.setBounds(350, 240, 250, 30);
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton4.setText("Exit");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        exitButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        exitButton.setText("Exit");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                exitButtonActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton4);
-        jButton4.setBounds(643, 433, 270, 50);
+        jPanel2.add(exitButton);
+        exitButton.setBounds(643, 433, 270, 50);
 
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton5.setText("Info");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        infoButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        infoButton.setText("Info");
+        infoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                infoButtonActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton5);
-        jButton5.setBounds(20, 450, 80, 23);
-        jPanel2.add(User);
-        User.setBounds(270, 190, 200, 30);
-        User.getAccessibleContext().setAccessibleParent(this);
+        jPanel2.add(infoButton);
+        infoButton.setBounds(20, 450, 80, 23);
+        jPanel2.add(userTF);
+        userTF.setBounds(270, 190, 200, 30);
+        userTF.getAccessibleContext().setAccessibleParent(this);
 
-        jPanel2.add(Pass);
-        Pass.setBounds(480, 190, 200, 30);
+        jPanel2.add(passTF);
+        passTF.setBounds(480, 190, 200, 30);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Username:");
-        jPanel2.add(jLabel1);
-        jLabel1.setBounds(270, 160, 130, 30);
+        userLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        userLabel.setForeground(new java.awt.Color(255, 255, 255));
+        userLabel.setText("Username:");
+        jPanel2.add(userLabel);
+        userLabel.setBounds(270, 160, 130, 30);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Password:");
-        jPanel2.add(jLabel3);
-        jLabel3.setBounds(480, 160, 130, 30);
+        passLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        passLabel.setForeground(new java.awt.Color(255, 255, 255));
+        passLabel.setText("Password:");
+        jPanel2.add(passLabel);
+        passLabel.setBounds(480, 160, 130, 30);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/Background_Image.jpg"))); // NOI18N
-        jLabel2.setText("jLabel2");
-        jPanel2.add(jLabel2);
-        jLabel2.setBounds(0, 0, 1030, 490);
+        backgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/librarymanagementsystem/Background_Image.jpg"))); // NOI18N
+        backgroundLabel.setText("jLabel2");
+        jPanel2.add(backgroundLabel);
+        backgroundLabel.setBounds(0, 0, 1030, 490);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,67 +109,31 @@ public class LogIn extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
         LogIn li = new LogIn();
         li.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_loginButtonActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         // TODO add your handling code here:
         System.exit(0);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_exitButtonActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Library Management System\n\nMade by:\nAbdallah Kareem               - 18-00223\nAhmed Elsayed Mostafa  -  18-00179\nKhalid Tariq                         -  18-00371\nOsama Ahmed Sakr         -  18-00389");
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LogIn().setVisible(true);
-            }
-        });
-    }
+    }//GEN-LAST:event_infoButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPasswordField Pass;
-    private javax.swing.JTextField User;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel backgroundLabel;
+    private javax.swing.JButton exitButton;
+    private javax.swing.JButton infoButton;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton loginButton;
+    private javax.swing.JLabel passLabel;
+    private javax.swing.JPasswordField passTF;
+    private javax.swing.JLabel userLabel;
+    private javax.swing.JTextField userTF;
     // End of variables declaration//GEN-END:variables
 }

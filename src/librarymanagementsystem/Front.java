@@ -105,19 +105,19 @@ public class Front extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        BookClientEntry insrt = new BookClientEntry();
+        NewBookScreen insrt = new NewBookScreen();
         insrt.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        UpdateDelete ud = new UpdateDelete();
+        RemoveUserScreen ud = new RemoveUserScreen();
         ud.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        BookBase bc = new BookBase();
+        LibrarianScreen bc = new LibrarianScreen();
         bc.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -130,18 +130,6 @@ public class Front extends javax.swing.JFrame {
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Library Management System\n\nMade by:\nAbdallah Kareem               - 18-00223\nAhmed Elsayed Mostafa  -  18-00179\nKhalid Tariq                         -  18-00371\nOsama Ahmed Sakr         -  18-00389");
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Front().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
