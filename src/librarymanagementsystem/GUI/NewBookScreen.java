@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package librarymanagementsystem;
+package librarymanagementsystem.GUI;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -42,7 +42,6 @@ public class NewBookScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Insertion of Data");
-        setPreferredSize(new java.awt.Dimension(500, 350));
         setResizable(false);
 
         newBookLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N

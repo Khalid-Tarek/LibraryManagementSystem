@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package librarymanagementsystem;
+package librarymanagementsystem.GUI;
 
 import javax.swing.JOptionPane;
 
@@ -84,7 +84,7 @@ public class Front extends javax.swing.JFrame {
         jPanel2.add(jButton5);
         jButton5.setBounds(20, 450, 80, 23);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/librarymanagementsystem/Background_Image.jpg"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/librarymanagementsystem/GUI/Background_Image.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
         jPanel2.add(jLabel2);
         jLabel2.setBounds(0, 0, 1030, 490);

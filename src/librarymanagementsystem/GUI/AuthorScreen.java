@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package librarymanagementsystem;
+package librarymanagementsystem.GUI;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,12 +16,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Osama Ahmed Sakr
  */
-public class MemberScreen extends javax.swing.JFrame {
+public class AuthorScreen extends javax.swing.JFrame {
 
     /**
      * Creates new form LibrarianScreen
      */
-    public MemberScreen() {
+    public AuthorScreen() {
         initComponents();
     }
 

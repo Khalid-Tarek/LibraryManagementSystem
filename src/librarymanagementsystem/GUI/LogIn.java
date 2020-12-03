@@ -2,7 +2,7 @@
  * Property of Abdallah Kareem; Ahmed Elsayed Mostafa; Khalid Tariq; Osama Ahmed Sakr
  * Do not edit at risk of legal action
  */
-package librarymanagementsystem;
+package librarymanagementsystem.GUI;
 
 
 import javax.swing.JOptionPane;
@@ -90,7 +90,7 @@ public class LogIn extends javax.swing.JFrame {
         jPanel2.add(passLabel);
         passLabel.setBounds(480, 160, 130, 30);
 
-        backgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/librarymanagementsystem/Background_Image.jpg"))); // NOI18N
+        backgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/librarymanagementsystem/GUI/Background_Image.jpg"))); // NOI18N
         backgroundLabel.setText("jLabel2");
         jPanel2.add(backgroundLabel);
         backgroundLabel.setBounds(0, 0, 1030, 490);

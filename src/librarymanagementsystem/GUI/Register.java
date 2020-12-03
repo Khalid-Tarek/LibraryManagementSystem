@@ -2,7 +2,7 @@
  * Property of Abdallah Kareem; Ahmed Elsayed Mostafa; Khalid Tariq; Osama Ahmed Sakr
  * Do not edit at risk of legal action
  */
-package librarymanagementsystem;
+package librarymanagementsystem.GUI;
 
 /**
  *
@@ -48,7 +48,6 @@ public class Register extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registeration");
-        setPreferredSize(new java.awt.Dimension(600, 413));
 
         registrationLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         registrationLabel.setText("Registration");
