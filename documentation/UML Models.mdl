@@ -8206,7 +8206,7 @@
 			concurrency 	"Sequential"
 			opExportControl 	"Public"
 			uid        	0)
-		    (object Operation "getBooks"
+		    (object Operation "getViewableBooks"
 			quid       	"5FB42E5803A8"
 			documentation 	
 |Returns a list of books the user can view
@@ -8243,6 +8243,19 @@
 				quid       	"5FB427C401D9"
 				type       	"int"))
 			result     	"List<String>"
+			concurrency 	"Sequential"
+			opExportControl 	"Private"
+			uid        	0)
+		    (object Operation "getUserBooks"
+			quid       	"5FC935CB0084"
+			parameters 	(list Parameters
+			    (object Parameter "userID"
+				quid       	"5FC935FC00BA"
+				type       	"int")
+			    (object Parameter "userType"
+				quid       	"5FC9361001CA"
+				type       	"char"))
+			result     	"List<Book>"
 			concurrency 	"Sequential"
 			opExportControl 	"Private"
 			uid        	0))
@@ -9204,7 +9217,7 @@
 			    default_color 	TRUE)
 			label      	(object ItemLabel
 			    Parent_View 	@388
-			    location   	(2972, 334)
+			    location   	(2972, 310)
 			    fill_color 	13434879
 			    nlines     	1
 			    max_width  	1096
@@ -9212,7 +9225,7 @@
 			    label      	"DatabaseUtils")
 			stereotype 	(object ItemLabel
 			    Parent_View 	@388
-			    location   	(2972, 285)
+			    location   	(2972, 261)
 			    fill_color 	13434879
 			    anchor     	10
 			    nlines     	1
@@ -9225,7 +9238,7 @@
 			quidu      	"5FB40078027D"
 			compartment 	(object Compartment
 			    Parent_View 	@388
-			    location   	(2972, 394)
+			    location   	(2972, 370)
 			    font       	(object Font
 				size       	10
 				face       	"Arial"
@@ -9238,10 +9251,10 @@
 			    icon_style 	"Icon"
 			    fill_color 	16777215
 			    anchor     	2
-			    nlines     	18
+			    nlines     	19
 			    max_width  	1092)
 			width      	1114
-			height     	1022
+			height     	1070
 			annotation 	8
 			autoResize 	TRUE)
 		    (object ClassView "Class" "Logical View::Librarian" @389
@@ -9675,7 +9688,7 @@
 			client     	@388
 			supplier   	@368
 			vertices   	(list Points
-			    (3517, 1295)
+			    (3517, 1319)
 			    (3517, 1424)
 			    (975, 1424)
 			    (773, 1247))
