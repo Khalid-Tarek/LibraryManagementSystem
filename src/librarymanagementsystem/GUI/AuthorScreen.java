@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package librarymanagementsystem.GUI;
+
+import librarymanagementsystem.DatabaseUtils;
+import librarymanagementsystem.Users.*;
+import librarymanagementsystem.Book;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,10 +17,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AuthorScreen extends javax.swing.JFrame {
 
+    private final Author currentAuthor;
+
     /**
      * Creates new form LibrarianScreen
+     * @param author The object representation of the author currently using the program.
      */
-    public AuthorScreen() {
+    public AuthorScreen(Author author) {
+        this.currentAuthor = author;
         initComponents();
     }
 

@@ -4,8 +4,10 @@
  */
 package librarymanagementsystem.GUI;
 
-
+import static librarymanagementsystem.DatabaseUtils.*;
+import librarymanagementsystem.Users.*;
 import javax.swing.JOptionPane;
+        
 /**
  *
  * @author OsamaSakr
@@ -110,9 +112,32 @@ public class LogIn extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
-        LogIn li = new LogIn();
-        li.setVisible(true);
+        String username = userTF.getText();
+        String password = passTF.getText();
+        
+        if(username.isEmpty())
+            JOptionPane.showMessageDialog(this, "Please enter a username!");
+        
+        if(password.isEmpty())
+            JOptionPane.showMessageDialog(this, "Please enter a password!");
+        
+        if(authenticate(username, password)){
+            User user  = getUser(username);
+            
+            if (user instanceof Member) {
+                MemberScreen screen = new MemberScreen((Member) user);
+                screen.setVisible(true);
+            } else if (user instanceof Librarian) {
+                LibrarianScreen screen = new LibrarianScreen((Librarian) user);
+                screen.setVisible(true);
+            } else if (user instanceof Author) {
+                AuthorScreen screen = new AuthorScreen((Author) user);
+                screen.setVisible(true);
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "Wrong username or password!");
+        }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
@@ -122,7 +147,7 @@ public class LogIn extends javax.swing.JFrame {
 
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Library Management System\n\nMade by:\nAbdallah Kareem               - 18-00223\nAhmed Elsayed Mostafa  -  18-00179\nKhalid Tariq                         -  18-00371\nOsama Ahmed Sakr         -  18-00389");
+        JOptionPane.showMessageDialog(this, "Library Management System\n\nMade by:\nAbdallah Kareem               - 18-00223\nAhmed Elsayed Mostafa  -  18-00179\nKhalid Tariq                         -  18-00371\nOsama Ahmed Sakr         -  18-00389");
     }//GEN-LAST:event_infoButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

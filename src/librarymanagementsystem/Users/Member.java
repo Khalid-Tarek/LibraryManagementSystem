@@ -1,5 +1,6 @@
 package librarymanagementsystem.Users;
 
+import librarymanagementsystem.DatabaseUtils;
 import librarymanagementsystem.Book;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class Member extends User {
 
     public void addCredit(int credit) {
         this.credit += credit;
+        DatabaseUtils.updateUser(this);
     }
 
     public boolean borrowBook(Book book) {
@@ -33,8 +35,11 @@ public class Member extends User {
             return false;
         else {
             borrowedBooks.add(book);
-            book.setBorrowedBy(getUSER_ID());
             fine += book.getFINE();
+            book.setBorrowedBy(getUSER_ID());
+            book.setFinePayed(false);
+            DatabaseUtils.updateUser(this);
+            DatabaseUtils.updateBookRecord(book);
             return true;
         }
     }
@@ -54,7 +59,9 @@ public class Member extends User {
             if (credit >= book.getFINE()) {
                 credit -= book.getFINE();
                 fine -= book.getFINE();
+                DatabaseUtils.updateUser(this);
                 book.setFinePayed(true);
+                DatabaseUtils.updateBookRecord(book);
                 return true;
             } else return false;
         } else return false;
@@ -63,9 +70,10 @@ public class Member extends User {
     public boolean returnBook(Book book) {
         if (book == null)
             return false;
-        else if (borrowedBooks.contains(book)) {
+        else if (borrowedBooks.contains(book) && book.isFinePayed()) {
             borrowedBooks.remove(book);
             book.setBorrowedBy(0);
+            DatabaseUtils.updateBookRecord(book);
             return true;
         } else return false;
     }

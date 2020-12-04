@@ -1,5 +1,6 @@
 package librarymanagementsystem.Users;
 
+import librarymanagementsystem.DatabaseUtils;
 import librarymanagementsystem.Book;
 
 /**
@@ -16,7 +17,7 @@ public class Librarian extends User {
         if (user == null)
             return false;
         else {
-            //DatabaseUtils.removeUser(user);
+            DatabaseUtils.removeUser(user);
             return true;
         }
     }
@@ -25,7 +26,7 @@ public class Librarian extends User {
         if (book == null)
             return false;
         else {
-            //DatabaseUtils.removeBookRecord(book);
+            DatabaseUtils.removeBookRecord(book);
             return true;
         }
     }

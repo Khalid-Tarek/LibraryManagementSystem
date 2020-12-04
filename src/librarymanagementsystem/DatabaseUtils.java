@@ -40,8 +40,8 @@ public class DatabaseUtils {
         ResultSet result = null;
         try {
             stmt = con.createStatement();
-            String query = "SELECT * FROM accounts where username='" + username + "' "
-                            + "and password='" + password + "'";
+            String query = "SELECT * FROM accounts WHERE username='" + username + "' "
+                            + "AND password='" + password + "'";
             result = stmt.executeQuery(query);
 
             loginResult = result.next();
@@ -332,10 +332,10 @@ public class DatabaseUtils {
         
         try {
             stmt = con.createStatement();
-            String query = "UPDATE books SET borrowed_by=" + borrowedBy + ", " 
+            String query = "UPDATE books SET borrowed_by=" + borrowedBy + ", fine_payed=" 
                     + finePayed + " WHERE book_ID=" + book.getBOOK_ID();
             
-            if(stmt.executeUpdate(query) != 0) System.out.println("Book wasn't updated");
+            if(stmt.executeUpdate(query) != 1) System.out.println("Book wasn't updated");
             
         } catch (SQLException ex) {
             System.out.println("Error in updateBook: " + ex);
@@ -415,8 +415,8 @@ public class DatabaseUtils {
                 bookGenre = result.getString("genre");
                 writtenBy = result.getInt("written_by");
                 publishedOn = result.getDate("published_on");
-                fine = result.getInt("fine");
-                borrowedBy = result.getInt("borrowed_y");
+                fine = result.getInt("book_fine");
+                borrowedBy = result.getInt("borrowed_by");
                 finePayed = result.getBoolean("fine_payed");
                 
                 viewableBooks.add(new Book(bookID, bookName, bookGenre, writtenBy, 
@@ -445,7 +445,6 @@ public class DatabaseUtils {
         } catch (ClassNotFoundException ex) {
             System.out.println("Can't load Driver: ClassNotFoundException");
         } 
-        System.out.println(DB_URL);
         try {
             con = DriverManager.getConnection(DB_URL);
         } catch (SQLException ex) {
@@ -498,9 +497,9 @@ public class DatabaseUtils {
         try {
             String query = "";
             if ((userID / 100000) == 1) {
-                query = "SELECT * FROM books WHERE borrowed_by='" + userID + "'";
+                query = "SELECT * FROM books WHERE borrowed_by=" + userID;
             } else if ((userID / 100000) == 1) {
-                query = "SELECT * FROM books WHERE written_by='" + userID + "'";
+                query = "SELECT * FROM books WHERE written_by=" + userID;
             }
             
             stmt = con.createStatement();
@@ -517,8 +516,8 @@ public class DatabaseUtils {
                 bookGenre = result.getString("genre");
                 writtenBy = result.getInt("written_by");
                 publishedOn = result.getDate("published_on");
-                fine = result.getInt("fine");
-                borrowedBy = result.getInt("borrowed_y");
+                fine = result.getInt("book_fine");
+                borrowedBy = result.getInt("borrowed_by");
                 finePayed = result.getBoolean("fine_payed");
                 
                 userBooks.add(new Book(bookID, bookName, bookGenre, writtenBy, 

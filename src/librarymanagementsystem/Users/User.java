@@ -28,4 +28,15 @@ public abstract class User {
     public String getNAME() {
         return NAME;
     }
+    
+    @Override
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+        
+        str.append("Name: ").append(NAME).append("\n");
+        str.append("Username: ").append(USERNAME).append("\n");
+        str.append("UserID: ").append(USER_ID);
+        
+        return str.toString();
+    }
 }

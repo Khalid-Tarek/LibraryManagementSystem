@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package librarymanagementsystem.GUI;
+
+import librarymanagementsystem.DatabaseUtils;
+import librarymanagementsystem.Users.*;
+import librarymanagementsystem.Book;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,10 +17,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class LibrarianScreen extends javax.swing.JFrame {
 
+    private final Librarian currentLibrarian;
+
     /**
      * Creates new form LibrarianScreen
+     * @param librarian The object representation of the librarian currently using the program.
      */
-    public LibrarianScreen() {
+    public LibrarianScreen(Librarian librarian) {
+        this.currentLibrarian = librarian;
         initComponents();
     }
 

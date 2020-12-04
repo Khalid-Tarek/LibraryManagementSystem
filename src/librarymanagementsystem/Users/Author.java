@@ -1,5 +1,6 @@
 package librarymanagementsystem.Users;
 
+import librarymanagementsystem.DatabaseUtils;
 import librarymanagementsystem.Book;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Author extends User {
             return false;
         else {
             ownedBooks.add(book);
-            //DatabaseUtils.addBookRecord(book);
+            DatabaseUtils.addBookRecord(book);
             return true;
         }
     }
@@ -31,7 +32,7 @@ public class Author extends User {
             return false;
         else {
             ownedBooks.remove(book);
-            //DatabaseUtils.removeBookRecord(book);
+            DatabaseUtils.removeBookRecord(book);
             return true;
         }
     }
