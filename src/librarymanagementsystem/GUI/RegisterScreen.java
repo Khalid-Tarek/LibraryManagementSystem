@@ -4,17 +4,25 @@
  */
 package librarymanagementsystem.GUI;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+import javax.swing.JOptionPane;
+import librarymanagementsystem.*;
+import librarymanagementsystem.Users.*;
+
 /**
  *
  * @author OsamaSakr
  */
-public class Register extends javax.swing.JFrame {
+public class RegisterScreen extends javax.swing.JFrame {
 
     /**
      * Creates new form Register
      */
-    public Register() {
+    public RegisterScreen() {
         initComponents();
+
         memberRadioButton.setSelected(true);
         phoneLabel.setVisible(true);
         phoneTF.setVisible(true);
@@ -34,8 +42,6 @@ public class Register extends javax.swing.JFrame {
         memberRadioButton = new javax.swing.JRadioButton();
         authorRadioButton = new javax.swing.JRadioButton();
         userTF = new javax.swing.JTextField();
-        passTF = new javax.swing.JTextField();
-        passOkTF = new javax.swing.JTextField();
         nameTF = new javax.swing.JTextField();
         phoneTF = new javax.swing.JTextField();
         userLabel = new javax.swing.JLabel();
@@ -45,6 +51,8 @@ public class Register extends javax.swing.JFrame {
         phoneLabel = new javax.swing.JLabel();
         registerButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        passTF = new javax.swing.JPasswordField();
+        passOkTF = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registeration");
@@ -136,13 +144,13 @@ public class Register extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(userTF, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(passLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(passOkLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(passOkTF, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(passTF, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(passTF)
+                                    .addComponent(passOkTF)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -166,13 +174,15 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(userTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(userLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(passLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(passTF)
+                        .addGap(1, 1, 1)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passOkTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passOkLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passOkLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passOkTF, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -190,7 +200,6 @@ public class Register extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
@@ -210,9 +219,56 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_memberRadioButtonActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_registerButtonActionPerformed
+        String username = userTF.getText();
+        String password = passTF.getText();
+        String passwordOk = passOkTF.getText();
+        String name = nameTF.getText();
+        String phoneStr = phoneTF.getText();
 
+        if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "You didn't enter a username");
+            return;
+        }
+        if (password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "You didn't enter a password");
+            return;
+        }
+        if (passwordOk.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "You didn't enter a password confirmation");
+            return;
+        }
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "You didn't enter a name");
+            return;
+        }
+
+        if (!password.matches(passwordOk)) {
+            JOptionPane.showMessageDialog(this, "Password doesn't match");
+            return;
+        }
+
+        List<String> phoneNumbers = new ArrayList<>();
+        StringTokenizer tokenizer = new StringTokenizer(phoneStr, ",");
+        while (tokenizer.hasMoreTokens()) {
+            phoneNumbers.add(tokenizer.nextToken());
+        }
+
+        boolean userAdded = false;
+
+        if (memberRadioButton.isSelected()) {
+            userAdded = DatabaseUtils.addUser(
+                    new Member(username, 0, name, phoneNumbers, null, 0, 0), password);
+        } else if (authorRadioButton.isSelected()) {
+            userAdded = DatabaseUtils.addUser(
+                    new Author(username, 0, name, null), password);
+        }
+
+        if (userAdded) {
+            super.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error while adding user. (Probably username already taken)");
+        }
+    }//GEN-LAST:event_registerButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup UserType;
@@ -223,8 +279,8 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JTextField nameTF;
     private javax.swing.JLabel passLabel;
     private javax.swing.JLabel passOkLabel;
-    private javax.swing.JTextField passOkTF;
-    private javax.swing.JTextField passTF;
+    private javax.swing.JPasswordField passOkTF;
+    private javax.swing.JPasswordField passTF;
     private javax.swing.JLabel phoneLabel;
     private javax.swing.JTextField phoneTF;
     private javax.swing.JButton registerButton;

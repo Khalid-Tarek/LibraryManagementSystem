@@ -4,20 +4,21 @@
  */
 package librarymanagementsystem.GUI;
 
+import javax.swing.JFrame;
 import static librarymanagementsystem.DatabaseUtils.*;
 import librarymanagementsystem.Users.*;
 import javax.swing.JOptionPane;
-        
+
 /**
  *
  * @author OsamaSakr
  */
-public class LogIn extends javax.swing.JFrame {
+public class LoginScreen extends javax.swing.JFrame {
 
     /**
      * Creates new form LogIn
      */
-    public LogIn() {
+    public LoginScreen() {
         initComponents();
     }
 
@@ -114,27 +115,32 @@ public class LogIn extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String username = userTF.getText();
         String password = passTF.getText();
-        
-        if(username.isEmpty())
+
+        if (username.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter a username!");
-        
-        if(password.isEmpty())
+        }
+
+        if (password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter a password!");
-        
-        if(authenticate(username, password)){
-            User user  = getUser(username);
-            
+        }
+
+        if (authenticate(username, password)) {
+            User user = getUser(username);
+            JFrame screen;
             if (user instanceof Member) {
-                MemberScreen screen = new MemberScreen((Member) user);
-                screen.setVisible(true);
+                screen = new MemberScreen((Member) user);
             } else if (user instanceof Librarian) {
-                LibrarianScreen screen = new LibrarianScreen((Librarian) user);
-                screen.setVisible(true);
+                screen = new LibrarianScreen((Librarian) user);
             } else if (user instanceof Author) {
-                AuthorScreen screen = new AuthorScreen((Author) user);
-                screen.setVisible(true);
+                screen = new AuthorScreen((Author) user);
+            } else {
+                return;
             }
-            
+
+            screen.setVisible(true);
+            screen.setLocationRelativeTo(null);
+            setVisible(false);
+
         } else {
             JOptionPane.showMessageDialog(this, "Wrong username or password!");
         }

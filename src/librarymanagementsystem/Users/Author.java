@@ -5,22 +5,22 @@ import librarymanagementsystem.Book;
 import java.util.List;
 
 /**
- * 
+ *
  * @author Abdallah Kareem
  */
 public class Author extends User {
 
-    private List <Book> ownedBooks;
+    private List<Book> ownedBooks;
 
-    public Author(String USERNAME, int USER_ID, String NAME, List <Book> ownedBooks) {
+    public Author(String USERNAME, int USER_ID, String NAME, List<Book> ownedBooks) {
         super(USERNAME, USER_ID, NAME);
         this.ownedBooks = ownedBooks;
     }
 
     public boolean AddBook(Book book) {
-        if (book == null)
+        if (book == null) {
             return false;
-        else {
+        } else {
             ownedBooks.add(book);
             DatabaseUtils.addBookRecord(book);
             return true;
@@ -28,16 +28,16 @@ public class Author extends User {
     }
 
     public boolean RemoveBook(Book book) {
-        if (book == null)
+        if (book == null) {
             return false;
-        else {
+        } else {
             ownedBooks.remove(book);
             DatabaseUtils.removeBookRecord(book);
             return true;
         }
     }
 
-    public List <Book> getOwnedBooks() {
+    public List<Book> getOwnedBooks() {
         return ownedBooks;
     }
 

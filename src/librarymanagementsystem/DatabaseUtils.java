@@ -61,9 +61,10 @@ public class DatabaseUtils {
      * Also creates an accounts record for the user to log in.
      * @param user      User object of type Member or Author.
      * @param password  A string password to create an accounts table.
+     * @return          Returns true if the user was added, false if an error happened
      */
-    public static void addUser(User user, String password){
-        if(user == null || user instanceof Librarian) return;
+    public static boolean addUser(User user, String password){
+        if(user == null || user instanceof Librarian) return false;
         
         //Safety integer just in case an error happens while getting the max userID.
         int userID = 0;
@@ -83,12 +84,15 @@ public class DatabaseUtils {
             
             if(stmt.executeUpdate(query) != 1) {
                 System.out.println("Account wasn't added successfully");
-                return;
+                return false;
             }
             
             if(user instanceof Member){
                 result = stmt.executeQuery("SELECT MAX(member_ID) member_ID FROM members");
-                if(result.next()) userID = result.getInt("member_ID") + 1;
+                if(result.next()) 
+                    userID = result.getInt("member_ID") + 1;
+                else
+                    userID = 100001;
                 
                 Member member = (Member) user;
                 int credit = member.getCredit();
@@ -100,7 +104,7 @@ public class DatabaseUtils {
                 
                 if(stmt.executeUpdate(query) != 1) {
                     System.out.println("Member wasn't added successfully");
-                    return;
+                    return false;
                 }
                 
                 //Add the user's phone numbers in the phones table
@@ -109,20 +113,23 @@ public class DatabaseUtils {
                     query = "INSERT INTO phones VALUES ('" + username + "', " + number + ")";
                     if(stmt.executeUpdate(query) != 1) {
                         System.out.println("Error happened while adding numbers");
-                        return;
+                        return false;
                     }
                 }
                 
             } else if (user instanceof Author) {
                 result = stmt.executeQuery("SELECT MAX(author_ID) author_ID FROM authors");
-                if(result.next()) userID = result.getInt("author_ID") + 1;
+                if(result.next()) 
+                    userID = result.getInt("author_ID") + 1;
+                else
+                    userID = 300001;
                 
                 query = "INSERT INTO authors VALUES (" + userID + ", '" 
                         + username + "', '" + name + "')";
                 
                 if(stmt.executeUpdate(query) != 1){
                     System.out.println("Author wasn't added successfully");
-                    return;
+                    return false;
                 }
                 
             }
@@ -134,6 +141,8 @@ public class DatabaseUtils {
             if (stmt != null) try {stmt.close();} catch (SQLException ex){}
             if (result != null) try {result.close();} catch (SQLException ex){}
         }
+        
+        return true;
     }
     
     /**
@@ -191,7 +200,7 @@ public class DatabaseUtils {
                     System.out.println("Can't remove member, they still have borrowed books");
                     return;
                 }
-                query = "DELETE FROM accounts WHERE username=" + ((Member) user).getUSERNAME();
+                query = "DELETE FROM accounts WHERE username='" + user.getUSERNAME() + "'";
                 
             } else if (user instanceof Author) {
                 //if the author still owns books, return early without doing anything
@@ -199,7 +208,7 @@ public class DatabaseUtils {
                     System.out.println("Can't remove author, they still have owned books");
                     return;
                 }
-                query = "DELETE FROM accounts WHERE username=" + ((Author) user).getUSERNAME();
+                query = "DELETE FROM accounts WHERE username='" + user.getUSERNAME() + "'";
                 
             }
             
@@ -256,7 +265,7 @@ public class DatabaseUtils {
             }
             
             //Check if there's an author record with the passed username
-            query = "SELECT * FROM authors WHERE username'" + username + "'";
+            query = "SELECT * FROM authors WHERE username='" + username + "'";
             result = stmt.executeQuery(query);
             if(result.next()){
                 int authorID = result.getInt("author_ID");
@@ -299,7 +308,10 @@ public class DatabaseUtils {
             String query = "SELECT MAX(book_ID) as book_ID FROM books";
             result = stmt.executeQuery(query);
             
-            if(result.next()) bookID = result.getInt("book_ID");
+            if(result.next()) 
+                bookID = result.getInt("book_ID") + 1;
+            else
+                bookID = 1;
             
             query = "INSERT INTO books VALUES (" + bookID + ", '"+ bookName 
                     + "', '" + genre + "', " + bookFine + ", " + writtenBy
@@ -352,13 +364,14 @@ public class DatabaseUtils {
     public static void removeBookRecord(Book book){
         if(book == null || !book.isFinePayed()) {
             System.out.println("Can't remove book, please pay it's fine first");
+            return;
         }
         
         initConnection();
         Statement stmt = null;
         try {
             stmt = con.createStatement();
-            String query = "REMOVE FROM books WHERE book_ID=" + book.getBOOK_ID();
+            String query = "DELETE FROM books WHERE book_ID=" + book.getBOOK_ID();
             
             if(stmt.executeUpdate(query) != 1) System.out.println("The book wasn't removed");
             
@@ -382,9 +395,6 @@ public class DatabaseUtils {
      * @return      A list of books
      */
     public static List<Book> getViewableBooks(User user){
-        if(user instanceof Author){
-            return ((Author) user).getOwnedBooks();
-        }
         
         List<Book> viewableBooks = new ArrayList<>();
         
@@ -397,9 +407,10 @@ public class DatabaseUtils {
             if(user instanceof Member){
                 int memberID = user.getUSER_ID();
                 query = "SELECT * FROM books WHERE borrowed_by IS NULL";
-            } else if(user instanceof Librarian){
+            } else if (user instanceof Author)
+                query = "SELECT * FROM books WHERE written_by=" + user.getUSER_ID();
+             else if(user instanceof Librarian)
                 query = "SELECT * FROM books";
-            }
             
             stmt = con.createStatement();
             result = stmt.executeQuery(query);
@@ -432,6 +443,41 @@ public class DatabaseUtils {
         }
         
         return viewableBooks;
+    }
+    
+    /**
+     * A method used by a librarian to get all the members and authors in the database
+     * @return A list of users registered in the database
+     */
+    public static List<User> getMembersAndAuthors() {
+        List<User> users = new ArrayList<>();
+        
+        initConnection();
+        Statement stmt = null;
+        ResultSet result = null;
+        
+        try {
+            stmt = con.createStatement();
+            
+            result = stmt.executeQuery("SELECT username FROM members");
+            while(result.next()){
+                users.add(getUser(result.getString("username")));
+            }
+            
+            result = stmt.executeQuery("SELECT username FROM authors");
+            while(result.next()){
+                users.add(getUser(result.getString("username")));
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println("Error in getMembersAndAuthors: " + ex);
+        } finally {
+            if (con != null) try {con.close();} catch (SQLException ex ){}
+            if (stmt != null) try {stmt.close();} catch (SQLException ex){}
+            if (result != null) try {result.close();} catch (SQLException ex){}
+        }
+        
+        return users;
     }
     
     /**
@@ -498,7 +544,7 @@ public class DatabaseUtils {
             String query = "";
             if ((userID / 100000) == 1) {
                 query = "SELECT * FROM books WHERE borrowed_by=" + userID;
-            } else if ((userID / 100000) == 1) {
+            } else if ((userID / 100000) == 3) {
                 query = "SELECT * FROM books WHERE written_by=" + userID;
             }
             

@@ -3,10 +3,11 @@ package librarymanagementsystem;
 import java.sql.Date;
 
 /**
- * 
+ *
  * @author Abdallah Kareem
  */
 public class Book {
+
     final private int BOOK_ID;
     final private String BOOK_NAME;
     final private String GENRE;
@@ -16,7 +17,7 @@ public class Book {
     private int borrowedBy;
     private boolean finePayed;
 
-    public Book(int BOOK_ID, String BOOK_NAME, String GENRE, int Written_BY, 
+    public Book(int BOOK_ID, String BOOK_NAME, String GENRE, int Written_BY,
             Date PUBLISHED_ON, int FINE, int borrowedBy, boolean finePayed) {
         this.BOOK_ID = BOOK_ID;
         this.BOOK_NAME = BOOK_NAME;
@@ -27,7 +28,6 @@ public class Book {
         this.borrowedBy = borrowedBy;
         this.finePayed = finePayed;
     }
-
 
     public int getBOOK_ID() {
         return BOOK_ID;
@@ -60,7 +60,6 @@ public class Book {
     public boolean isFinePayed() {
         return finePayed;
     }
-
 
     public void setBorrowedBy(int memberID) {
         this.borrowedBy = memberID;

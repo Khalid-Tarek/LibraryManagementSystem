@@ -1,13 +1,11 @@
 package librarymanagementsystem.GUI;
 
-import librarymanagementsystem.DatabaseUtils;
+import librarymanagementsystem.*;
 import librarymanagementsystem.Users.*;
-import librarymanagementsystem.Book;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,14 +16,21 @@ import javax.swing.table.DefaultTableModel;
 public class AuthorScreen extends javax.swing.JFrame {
 
     private final Author currentAuthor;
+    private List<Book> currentlyVisibleBooks;
 
     /**
      * Creates new form LibrarianScreen
-     * @param author The object representation of the author currently using the program.
+     *
+     * @param author The object representation of the author currently using the
+     * program.
      */
     public AuthorScreen(Author author) {
-        this.currentAuthor = author;
         initComponents();
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        this.currentAuthor = author;
+        this.setTitle("Author: " + currentAuthor.getNAME());
+        displayBooks(DatabaseUtils.getViewableBooks(author));
     }
 
     @SuppressWarnings("unchecked")
@@ -34,22 +39,19 @@ public class AuthorScreen extends javax.swing.JFrame {
 
         bookTF = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        datatable = new javax.swing.JTable();
+        dataTable = new javax.swing.JTable();
         bookLabel = new javax.swing.JLabel();
         searchButton = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
-        authorLabel = new javax.swing.JLabel();
-        authorTF = new javax.swing.JTextField();
         removeBookButton = new javax.swing.JButton();
-        removeMemberButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
-        newAccountButton = new javax.swing.JButton();
+        newBookButton = new javax.swing.JButton();
         myInfoButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Search Books");
 
-        datatable.setModel(new javax.swing.table.DefaultTableModel(
+        dataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -65,7 +67,7 @@ public class AuthorScreen extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(datatable);
+        jScrollPane1.setViewportView(dataTable);
 
         bookLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         bookLabel.setText("Book  Title");
@@ -86,24 +88,12 @@ public class AuthorScreen extends javax.swing.JFrame {
             }
         });
 
-        authorLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        authorLabel.setText("Author Name");
-
         removeBookButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         removeBookButton.setText("Remove Book");
         removeBookButton.setToolTipText("");
         removeBookButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeBookButtonActionPerformed(evt);
-            }
-        });
-
-        removeMemberButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        removeMemberButton.setText("Remove Member/Author");
-        removeMemberButton.setToolTipText("");
-        removeMemberButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removeMemberButtonActionPerformed(evt);
             }
         });
 
@@ -115,14 +105,15 @@ public class AuthorScreen extends javax.swing.JFrame {
             }
         });
 
-        newAccountButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        newAccountButton.setText("New Account");
-        newAccountButton.addActionListener(new java.awt.event.ActionListener() {
+        newBookButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        newBookButton.setText("New Book");
+        newBookButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newAccountButtonActionPerformed(evt);
+                newBookButtonActionPerformed(evt);
             }
         });
 
+        myInfoButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         myInfoButton.setText("My Info");
         myInfoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,73 +126,53 @@ public class AuthorScreen extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(authorLabel)
-                            .addComponent(bookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(bookTF, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53)
-                                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(authorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)
-                        .addComponent(removeBookButton)
-                        .addGap(47, 47, 47)
-                        .addComponent(removeMemberButton))
+                        .addContainerGap()
+                        .addComponent(myInfoButton))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 923, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(newAccountButton)))))
-                .addGap(0, 12, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(myInfoButton)
+                            .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(newBookButton)
+                            .addComponent(removeBookButton)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(bookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bookTF, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(93, 93, 93)
+                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(191, 191, 191)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bookTF, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(bookTF, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(authorTF, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                            .addComponent(authorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(34, 34, 34))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(removeBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(removeMemberButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(103, 103, 103)
-                        .addComponent(newAccountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(myInfoButton)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(removeBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(104, 104, 104)
+                        .addComponent(newBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(91, 91, 91)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(myInfoButton)
+                    .addComponent(closeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9))
         );
 
@@ -209,101 +180,105 @@ public class AuthorScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
-        clearButton.doClick();
-        DefaultTableModel model = (DefaultTableModel) datatable.getModel();
-        try{
-            Class.forName("java.sql.Driver");
-            Connection con = DriverManager.getConnection
-                    ("jdbc:mysql://localhost/mysql","root","osama");
-            Statement stmt = con.createStatement();
-            String bknm = (String)bookTF.getText();
-            String authnm = (String)authorTF.getText();
-            if (bknm == "" && authnm == "")
-                    JOptionPane.showMessageDialog(null, "Please enter a book or author name");                
-            else {
-            String query = "select * from common "
-                    + "where bookname like '%" + bknm + "%' and bookauthor like '%" + authnm + "%';";
-            ResultSet rs = stmt.executeQuery(query);
-            
-            System.out.println(bknm);
-            System.out.println(authnm);
-                             
-            while(rs.next()) {
-                String id = rs.getString("idno");
-                String bName = rs.getString("name");
-                String add = rs.getString("add");
-                String age = rs.getString("age");
-                String phone = rs.getString("phno");
-                String bkid = rs.getString("bookid");
-                String bkname = rs.getString("bookname");
-                String abt = rs.getString("about");
-                String ed = rs.getString("edition");
-                String bkauthor = rs.getString("bookauthor");
-                String email = rs.getString("email");
-                model.addRow(new Object[] {id, bName, age, add, phone, bkid, bkname, abt, ed, bkauthor, email});   
-            }
-            JOptionPane.showMessageDialog(null, "Executed SQL query: " + query);
-            rs.close();
-            }
-            stmt.close();
-            con.close();
+        String bookTitleSearched = bookTF.getText();
+
+        if (bookTitleSearched.isEmpty()) {
+            return;
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error in connectivity");
+
+        List<Book> searchBooks = new ArrayList<>();
+        for (Book book : currentlyVisibleBooks) {
+            if (book.getBOOK_NAME().contains(bookTitleSearched)) {
+                searchBooks.add(book);
+            }
         }
+
+        displayBooks(searchBooks);
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        // TODO add your handling code here:
-        
-        DefaultTableModel model = (DefaultTableModel) datatable.getModel();
-        int rows = model.getRowCount();
-        if(rows > 0){
-            for (int i = 0; i<rows; i++){
-                model.removeRow(i);
-            }  
-        }
+        displayBooks(DatabaseUtils.getViewableBooks(currentAuthor));
     }//GEN-LAST:event_clearButtonActionPerformed
 
     private void removeBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBookButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_removeBookButtonActionPerformed
+        int selectedRowIndex = dataTable.getSelectedRow();
 
-    private void removeMemberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMemberButtonActionPerformed
-        // TODO add your handling code here:
-        RemoveUserScreen ud = new RemoveUserScreen();
-        ud.setVisible(true);
-    }//GEN-LAST:event_removeMemberButtonActionPerformed
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a book");
+            return;
+        }
+        Book selectedBook = currentlyVisibleBooks.get(selectedRowIndex);
+
+        if (selectedBook.isFinePayed()) {
+            currentAuthor.RemoveBook(selectedBook);
+            clearButton.doClick();
+        } else {
+            JOptionPane.showMessageDialog(this, "Can't remove this book, it's fine is not paid");
+        }
+    }//GEN-LAST:event_removeBookButtonActionPerformed
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         // TODO add your handling code here:
-        super.dispose();
+        System.exit(0);
     }//GEN-LAST:event_closeButtonActionPerformed
 
-    private void newAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newAccountButtonActionPerformed
+    private void newBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBookButtonActionPerformed
         // TODO add your handling code here:
-        Register newAccount = new Register();
-        newAccount.setVisible(true);
-    }//GEN-LAST:event_newAccountButtonActionPerformed
+        NewBookScreen newBook = new NewBookScreen(currentAuthor);
+        newBook.setVisible(true);
+        newBook.setTitle("New Book Record");
+        newBook.setLocationRelativeTo(null);
+    }//GEN-LAST:event_newBookButtonActionPerformed
 
     private void myInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myInfoButtonActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, currentAuthor);
     }//GEN-LAST:event_myInfoButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel authorLabel;
-    private javax.swing.JTextField authorTF;
     private javax.swing.JLabel bookLabel;
     private javax.swing.JTextField bookTF;
     private javax.swing.JButton clearButton;
     private javax.swing.JButton closeButton;
-    private javax.swing.JTable datatable;
+    private javax.swing.JTable dataTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton myInfoButton;
-    private javax.swing.JButton newAccountButton;
+    private javax.swing.JButton newBookButton;
     private javax.swing.JButton removeBookButton;
-    private javax.swing.JButton removeMemberButton;
     private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables
+
+    private void displayBooks(List<Book> books) {
+
+        //clears the current dataTable
+        DefaultTableModel model = (DefaultTableModel) dataTable.getModel();
+        int rows = model.getRowCount();
+        if (rows > 0) {
+            for (int i = 0; i < rows; i++) {
+                model.removeRow(0);
+            }
+        }
+
+        currentlyVisibleBooks = books;
+
+        Integer bookID, writtenBy, borrowedBy, fine;
+        String bookName, genre;
+        Date publishedOn;
+        Boolean finePayed;
+
+        for (Book book : currentlyVisibleBooks) {
+            bookID = book.getBOOK_ID();
+            bookName = book.getBOOK_NAME();
+            genre = book.getGENRE();
+            writtenBy = book.getWritten_BY();
+            publishedOn = book.getPUBLISHED_ON();
+            borrowedBy = book.getBorrowedBy();
+            fine = book.getFINE();
+            finePayed = book.isFinePayed();
+
+            model.addRow(new Object[]{bookID, bookName, genre, writtenBy, publishedOn,
+                borrowedBy, fine, finePayed});
+        }
+
+    }
+
 }

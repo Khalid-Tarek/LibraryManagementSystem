@@ -63,14 +63,14 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="passLabel" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Component id="passOkLabel" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="passLabel" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="passOkLabel" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="passOkTF" min="-2" pref="293" max="-2" attributes="0"/>
-                                  <Component id="passTF" min="-2" pref="293" max="-2" attributes="0"/>
+                                  <Component id="passTF" max="32767" attributes="0"/>
+                                  <Component id="passOkTF" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -105,16 +105,19 @@
                   <Component id="userLabel" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="passTF" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                  <Component id="passLabel" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="passLabel" min="-2" pref="26" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="passTF" max="32767" attributes="0"/>
+                      <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="passOkTF" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   <Component id="passOkLabel" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                  <Component id="passOkTF" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="nameTF" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                   <Component id="nameLabel" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
@@ -172,10 +175,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="userTF">
-    </Component>
-    <Component class="javax.swing.JTextField" name="passTF">
-    </Component>
-    <Component class="javax.swing.JTextField" name="passOkTF">
     </Component>
     <Component class="javax.swing.JTextField" name="nameTF">
     </Component>
@@ -252,6 +251,10 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="passTF">
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="passOkTF">
     </Component>
   </SubComponents>
 </Form>

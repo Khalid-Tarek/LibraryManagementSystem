@@ -4,7 +4,7 @@ import librarymanagementsystem.DatabaseUtils;
 import librarymanagementsystem.Book;
 
 /**
- * 
+ *
  * @author Abdallah Kareem
  */
 public class Librarian extends User {
@@ -14,18 +14,18 @@ public class Librarian extends User {
     }
 
     public boolean removeUser(User user) {
-        if (user == null)
+        if (user == null) {
             return false;
-        else {
+        } else {
             DatabaseUtils.removeUser(user);
             return true;
         }
     }
 
     public boolean RemoveBook(Book book) {
-        if (book == null)
+        if (book == null) {
             return false;
-        else {
+        } else {
             DatabaseUtils.removeBookRecord(book);
             return true;
         }

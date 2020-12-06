@@ -1,14 +1,13 @@
 package librarymanagementsystem.GUI;
 
+import librarymanagementsystem.*;
+import librarymanagementsystem.Users.*;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-import librarymanagementsystem.Book;
-import librarymanagementsystem.DatabaseUtils;
-import librarymanagementsystem.Users.*;
 
 /**
  *
@@ -17,21 +16,23 @@ import librarymanagementsystem.Users.*;
 public class MemberScreen extends javax.swing.JFrame {
 
     private final Member currentMember;
-    private List<Book> currentlyVisibleBooks;   
+    private List<Book> currentlyVisibleBooks;
 
     /**
      * Creates new form LibrarianScreen
-     * @param member The object representation of the member currently using the program.
+     *
+     * @param member The object representation of the member currently using the
+     * program.
      */
-    public MemberScreen( Member member ) {
+    public MemberScreen(Member member) {
         initComponents();
-        
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         this.currentMember = member;
         this.setTitle("Member: " + currentMember.getNAME());
         creditLabel.setText("My Credit: " + currentMember.getCredit());
         finesLabel.setText("My Fines: " + currentMember.getFine());
         displayBooks(currentMember.getBorrowedBooks());
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -174,10 +175,10 @@ public class MemberScreen extends javax.swing.JFrame {
                                     .addComponent(bookTF, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(53, 53, 53)
                                     .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(46, 46, 46)
                                     .addComponent(switchTButton)
-                                    .addGap(45, 45, 45)
-                                    .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(37, 37, 37)))
                             .addComponent(myInfoButton))
                         .addGap(18, 18, 18)
@@ -233,36 +234,39 @@ public class MemberScreen extends javax.swing.JFrame {
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         String bookTitleSearched = bookTF.getText();
-        
-        if(bookTitleSearched.isEmpty()) return;
-        
-        List<Book> searchBooks = new ArrayList<>();
-        for(Book book : currentlyVisibleBooks){
-            if(book.getBOOK_NAME().contains(bookTitleSearched)) 
-                searchBooks.add(book);
+
+        if (bookTitleSearched.isEmpty()) {
+            return;
         }
-        
+
+        List<Book> searchBooks = new ArrayList<>();
+        for (Book book : currentlyVisibleBooks) {
+            if (book.getBOOK_NAME().contains(bookTitleSearched)) {
+                searchBooks.add(book);
+            }
+        }
+
         displayBooks(searchBooks);
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         //If you're viewing the library books, clears to them, otherwise clears to my books
-        displayBooks(switchTButton.isSelected()?
-                DatabaseUtils.getViewableBooks(currentMember)
-                :currentMember.getBorrowedBooks());
+        displayBooks(switchTButton.isSelected()
+                ? DatabaseUtils.getViewableBooks(currentMember)
+                : currentMember.getBorrowedBooks());
         creditLabel.setText("My Credit: " + currentMember.getCredit());
         finesLabel.setText("My Fines: " + currentMember.getFine());
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void addCreditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCreditButtonActionPerformed
-        
+
         String input = JOptionPane.showInputDialog(this, "Please enter an amount to add");
-        
-        try{
+
+        try {
             int addedAmount = Integer.parseInt(input);
             currentMember.addCredit(addedAmount);
             refreshButton.doClick();
-        } catch (NumberFormatException nex){
+        } catch (NumberFormatException nex) {
             JOptionPane.showMessageDialog(this, "Your entered amount is invalid");
         }
     }//GEN-LAST:event_addCreditButtonActionPerformed
@@ -274,37 +278,38 @@ public class MemberScreen extends javax.swing.JFrame {
 
     private void payFineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payFineButtonActionPerformed
         int selectedRowIndex = dataTable.getSelectedRow();
-        
-        if(selectedRowIndex == -1){
+
+        if (selectedRowIndex == -1) {
             JOptionPane.showMessageDialog(this, "Please select a book");
             return;
         }
         Book selectedBook = currentlyVisibleBooks.get(selectedRowIndex);
-        
-        if(selectedBook.isFinePayed()){
+
+        if (selectedBook.isFinePayed()) {
             JOptionPane.showMessageDialog(this, "Book's fine is already paid");
-        } else if(!currentMember.payFine(selectedBook)){
+        } else if (!currentMember.payFine(selectedBook)) {
             JOptionPane.showMessageDialog(this, "You don't have enough credit");
             return;
         } else {
             JOptionPane.showMessageDialog(this, "Fine payed Successfully!");
         }
-                
+
         int returnBook = JOptionPane.showConfirmDialog(this, "Would you like to return this book?");
-        if(returnBook == JOptionPane.YES_OPTION){
+        if (returnBook == JOptionPane.YES_OPTION) {
             currentMember.returnBook(selectedBook);
         }
-        
+
         refreshButton.doClick();
     }//GEN-LAST:event_payFineButtonActionPerformed
 
     private void myInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myInfoButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, currentMember);
+        JOptionPane.showMessageDialog(this, currentMember
+                + "\nPhone Numbers: " + currentMember.getPHONE_NUMBERS());
     }//GEN-LAST:event_myInfoButtonActionPerformed
 
     private void switchTButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_switchTButtonActionPerformed
-        if(switchTButton.isSelected()){
+        if (switchTButton.isSelected()) {
             switchTButton.setText("Show My Books");
             titleLabel.setText("Library Books");
             borrowBook.setEnabled(true);
@@ -321,12 +326,12 @@ public class MemberScreen extends javax.swing.JFrame {
 
     private void borrowBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowBookActionPerformed
         int selectedRowIndex = dataTable.getSelectedRow();
-        
-        if(selectedRowIndex == -1){
+
+        if (selectedRowIndex == -1) {
             JOptionPane.showMessageDialog(this, "Please select a book");
             return;
         }
-        
+
         currentMember.borrowBook(currentlyVisibleBooks.get(selectedRowIndex));
         refreshButton.doClick();
     }//GEN-LAST:event_borrowBookActionPerformed
@@ -350,24 +355,24 @@ public class MemberScreen extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void displayBooks(List<Book> books) {
-        
+
         //clears the current dataTable
         DefaultTableModel model = (DefaultTableModel) dataTable.getModel();
         int rows = model.getRowCount();
-        if(rows > 0){
-            for (int i = 0; i < rows; i++){
+        if (rows > 0) {
+            for (int i = 0; i < rows; i++) {
                 model.removeRow(0);
-            }  
+            }
         }
-        
+
         currentlyVisibleBooks = books;
-                
+
         Integer bookID, writtenBy, borrowedBy, fine;
         String bookName, genre;
         Date publishedOn;
         Boolean finePayed;
-        
-        for(Book book: currentlyVisibleBooks){
+
+        for (Book book : currentlyVisibleBooks) {
             bookID = book.getBOOK_ID();
             bookName = book.getBOOK_NAME();
             genre = book.getGENRE();
@@ -376,10 +381,10 @@ public class MemberScreen extends javax.swing.JFrame {
             borrowedBy = book.getBorrowedBy();
             fine = book.getFINE();
             finePayed = book.isFinePayed();
-            
-            model.addRow(new Object[] {bookID, bookName, genre, writtenBy, publishedOn, 
-                    borrowedBy, fine, finePayed});
+
+            model.addRow(new Object[]{bookID, bookName, genre, writtenBy, publishedOn,
+                borrowedBy, fine, finePayed});
         }
-        
+
     }
 }

@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package librarymanagementsystem.GUI;
 
-import java.sql.*;
+import java.util.List;
+import librarymanagementsystem.*;
+import librarymanagementsystem.Users.*;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,12 +12,15 @@ import javax.swing.table.DefaultTableModel;
  * @author Osama Ahmed Sakr
  */
 public class RemoveUserScreen extends javax.swing.JFrame {
-    Connection con = null;
-    Statement stmt = null;
-    ResultSet rs = null;
 
-    public RemoveUserScreen() {
+    private final Librarian currentLibrarian;
+    private List<User> currentlyVisibleUsers;
+
+    public RemoveUserScreen(Librarian librarian) {
         initComponents();
+
+        this.currentLibrarian = librarian;
+        displayUsers(DatabaseUtils.getMembersAndAuthors());
     }
 
     @SuppressWarnings("unchecked")
@@ -31,7 +32,7 @@ public class RemoveUserScreen extends javax.swing.JFrame {
         titleLabel = new javax.swing.JLabel();
         removeIDLabel = new javax.swing.JLabel();
         removeIDTF = new javax.swing.JTextField();
-        okButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
 
@@ -60,11 +61,11 @@ public class RemoveUserScreen extends javax.swing.JFrame {
         removeIDLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         removeIDLabel.setText("Enter UserID of the user you want to remove");
 
-        okButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        okButton.setText("OK");
-        okButton.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okButtonActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
 
@@ -73,7 +74,7 @@ public class RemoveUserScreen extends javax.swing.JFrame {
 
             },
             new String [] {
-                "UserID", "Username", "Name", "Type", "Has Fines?"
+                "UserID", "Username", "Name", "Type", "Fines"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -108,7 +109,7 @@ public class RemoveUserScreen extends javax.swing.JFrame {
                         .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(removeUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(123, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -129,7 +130,7 @@ public class RemoveUserScreen extends javax.swing.JFrame {
                     .addComponent(removeIDTF, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(okButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cancelButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(removeIDButton, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
                 .addContainerGap(75, Short.MAX_VALUE))
         );
@@ -138,25 +139,36 @@ public class RemoveUserScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void removeUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserButtonActionPerformed
-        // TODO add your handling code here:
+        int selectedRowIndex = userTable.getSelectedRow();
+
+        if (selectedRowIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a user");
+            return;
+        }
+        User selectedUser = currentlyVisibleUsers.get(selectedRowIndex);
+
+        removeUser(selectedUser);
     }//GEN-LAST:event_removeUserButtonActionPerformed
 
     private void removeIDButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeIDButtonActionPerformed
-        // TODO add your handling code here:
-        removeIDLabel.setEnabled(true);
-        removeIDTF.setEnabled(true);
-        okButton.setEnabled(true);
-        removeIDButton.setEnabled(false);
-        
+        int enteredID;
+        try {
+            enteredID = Integer.parseInt(removeIDTF.getText());
+        } catch (NumberFormatException nex) {
+            JOptionPane.showMessageDialog(this, "Your entered ID is invalid");
+            return;
+        }
+
+        removeUser(enteredID);
     }//GEN-LAST:event_removeIDButtonActionPerformed
 
-    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_okButtonActionPerformed
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        super.dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelButton;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton okButton;
     private javax.swing.JButton removeIDButton;
     private javax.swing.JLabel removeIDLabel;
     private javax.swing.JTextField removeIDTF;
@@ -164,4 +176,105 @@ public class RemoveUserScreen extends javax.swing.JFrame {
     private javax.swing.JLabel titleLabel;
     private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
+
+    private void displayUsers(List<User> users) {
+
+        //clears the current dataTable
+        DefaultTableModel model = (DefaultTableModel) userTable.getModel();
+        int rows = model.getRowCount();
+        if (rows > 0) {
+            for (int i = 0; i < rows; i++) {
+                model.removeRow(0);
+            }
+        }
+
+        currentlyVisibleUsers = users;
+
+        Integer userID;
+        String username, name, type = "", fine = "";
+
+        for (User user : users) {
+            userID = user.getUSER_ID();
+            username = user.getUSERNAME();
+            name = user.getNAME();
+
+            if (user instanceof Member) {
+                fine = ((Member) user).getFine() + "";
+                type = "Member";
+            } else if (user instanceof Author) {
+                fine = " ";
+                type = "Author";
+            }
+
+            model.addRow(new Object[]{userID, username, name, type, fine});
+        }
+
+    }
+
+    private void removeUser(User user) {
+
+        if (user instanceof Member) {
+            Member memberUser = (Member) user;
+
+            //Check if the member has no more fines to pay
+            if (memberUser.getFine() == 0) {
+
+                //Return all books the user borrowed (Since they have no more fines to pay)
+                for (Book book : memberUser.getBorrowedBooks()) {
+                    memberUser.returnBook(book);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "This member has not "
+                        + "paid all his fines. Can't remove him");
+                return;
+            }
+        } else if (user instanceof Author) {
+            Author authorUser = (Author) user;
+
+            //Check that all the author's books have their fines paid
+            boolean finesPaid = true;
+            for (Book book : authorUser.getOwnedBooks()) {
+                if (!book.isFinePayed()) {
+                    finesPaid = false;
+                    break;
+                }
+            }
+
+            //If all fines are paid, remove all books and then the author.
+            if (finesPaid) {
+                for (Book book : authorUser.getOwnedBooks()) {
+                    currentLibrarian.RemoveBook(book);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Can't remove author, some of "
+                        + "their books have pending fines");
+                return;
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "You chose a Librarian? How?! "
+                    + "That's Illegal! Shoot him or something!");
+            return;
+        }
+
+        currentLibrarian.removeUser(user);
+        displayUsers(DatabaseUtils.getMembersAndAuthors());
+    }
+
+    private void removeUser(int userID) {
+        if ((userID / 100000) == 2) {
+            JOptionPane.showMessageDialog(this, "The userID you entered could "
+                    + "belong to a librarian. You can't remove other librarians");
+            return;
+        }
+        for (User user : currentlyVisibleUsers) {
+            if (user.getUSER_ID() == userID) {
+                removeUser(user);
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(this, "Couldn't find a user with this id");
+    }
+
 }

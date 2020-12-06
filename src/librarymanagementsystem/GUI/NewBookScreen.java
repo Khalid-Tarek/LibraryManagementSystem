@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package librarymanagementsystem.GUI;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import librarymanagementsystem.*;
+import librarymanagementsystem.Users.*;
+
 import javax.swing.JOptionPane;
+import java.sql.Date;
 
 /**
  *
@@ -16,11 +12,17 @@ import javax.swing.JOptionPane;
  */
 public class NewBookScreen extends javax.swing.JFrame {
 
+    private final Author currentAuthor;
+
     /**
      * Creates new form NewBookScreen
+     *
+     * @param author The author trying to add the new book
      */
-    public NewBookScreen() {
+    public NewBookScreen(Author author) {
         initComponents();
+
+        this.currentAuthor = author;
     }
 
     @SuppressWarnings("unchecked")
@@ -131,11 +133,39 @@ public class NewBookScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        // TODO add your handling code here:
+        String bookName = bookNameTF.getText();
+        String genre = genreTF.getText();
+        String fineStr = fineTF.getText();
+
+        if (bookName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a name for your book");
+            return;
+        }
+        if (genre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a genre for your book");
+            return;
+        }
+        if (fineStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a fine for your book");
+            return;
+        }
+
+        int fine;
+        try {
+            fine = Integer.parseInt(fineStr);
+        } catch (NumberFormatException nex) {
+            JOptionPane.showMessageDialog(this, "Your fine is not valid");
+            return;
+        }
+
+        Date today = new Date(System.currentTimeMillis());
+        Book newBook = new Book(0, bookName, genre, currentAuthor.getUSER_ID(), today, fine, 0, true);
+        currentAuthor.AddBook(newBook);
+
+        super.dispose();
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
         super.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
