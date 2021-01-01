@@ -257,14 +257,15 @@ public class AuthorScreen extends javax.swing.JFrame {
                 model.removeRow(0);
             }
         }
-
+        if(books == null) return;
+        
         currentlyVisibleBooks = books;
 
         Integer bookID, writtenBy, borrowedBy, fine;
         String bookName, genre;
         Date publishedOn;
         Boolean finePayed;
-
+        
         for (Book book : currentlyVisibleBooks) {
             bookID = book.getBOOK_ID();
             bookName = book.getBOOK_NAME();

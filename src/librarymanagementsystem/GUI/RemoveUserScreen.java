@@ -158,7 +158,7 @@ public class RemoveUserScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Your entered ID is invalid");
             return;
         }
-
+        
         removeUser(enteredID);
     }//GEN-LAST:event_removeIDButtonActionPerformed
 

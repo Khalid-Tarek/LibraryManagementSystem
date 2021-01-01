@@ -109,11 +109,14 @@ public class DatabaseUtils {
                 
                 //Add the user's phone numbers in the phones table
                 List<String> phoneNumbers = member.getPHONE_NUMBERS();
-                for(String number : phoneNumbers){
-                    query = "INSERT INTO phones VALUES ('" + username + "', " + number + ")";
-                    if(stmt.executeUpdate(query) != 1) {
-                        System.out.println("Error happened while adding numbers");
-                        return false;
+                if(phoneNumbers != null){
+                    
+                    for (String number : phoneNumbers) {
+                        query = "INSERT INTO phones VALUES ('" + username + "', " + number + ")";
+                        if (stmt.executeUpdate(query) != 1) {
+                            System.out.println("Error happened while adding numbers");
+                            return false;
+                        }
                     }
                 }
                 
@@ -184,9 +187,9 @@ public class DatabaseUtils {
      * related to this user.
      * @param user Member or Author that is to be deleted from the database.
      */
-    public static void removeUser(User user){
-        if (user == null || user instanceof Librarian) return;
-        
+    public static boolean removeUser(User user){
+        if (user == null || user instanceof Librarian) return false;
+        boolean result = false;
         initConnection();
         Statement stmt = null;
         
@@ -198,7 +201,7 @@ public class DatabaseUtils {
                 //if the member still borrowed books, return early without doing anything
                 if(!((Member) user).getBorrowedBooks().isEmpty()){
                     System.out.println("Can't remove member, they still have borrowed books");
-                    return;
+                    return false;
                 }
                 query = "DELETE FROM accounts WHERE username='" + user.getUSERNAME() + "'";
                 
@@ -206,14 +209,14 @@ public class DatabaseUtils {
                 //if the author still owns books, return early without doing anything
                 if(!((Author) user).getOwnedBooks().isEmpty()){
                     System.out.println("Can't remove author, they still have owned books");
-                    return;
+                    return false;
                 }
                 query = "DELETE FROM accounts WHERE username='" + user.getUSERNAME() + "'";
                 
             }
             
             if(stmt.executeUpdate(query) != 1) System.out.println("Removing user didn't work!");
-            
+            else result = true;
         } catch (SQLException ex) {
             System.out.println("Error in removeUser: " + ex);
         } finally {
@@ -221,7 +224,7 @@ public class DatabaseUtils {
             if (stmt != null) try {stmt.close();} catch (SQLException ex){}
         }
         
-        user = null;
+        return result;
     }
     
     /**
@@ -291,7 +294,8 @@ public class DatabaseUtils {
      * @param book The new book to be added
      */
     public static void addBookRecord(Book book){
-        
+        if(book == null)
+            return;
         int bookID = 0;
         String bookName = book.getBOOK_NAME();
         String genre = book.getGENRE();
@@ -441,7 +445,8 @@ public class DatabaseUtils {
             if (stmt != null) try {stmt.close();} catch (SQLException ex){}
             if (result != null) try {result.close();} catch (SQLException ex){}
         }
-        
+        if(viewableBooks.isEmpty())
+            return null;
         return viewableBooks;
     }
     

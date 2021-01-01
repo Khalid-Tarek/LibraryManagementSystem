@@ -364,6 +364,7 @@ public class MemberScreen extends javax.swing.JFrame {
                 model.removeRow(0);
             }
         }
+        if(books == null) return;
 
         currentlyVisibleBooks = books;
 
