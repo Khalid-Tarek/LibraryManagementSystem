@@ -44,8 +44,8 @@ public class DatabaseUtilsTest {
     @org.junit.Test
     public void testAuthenticate() {
         System.out.println("authenticate");
-        String username = "";
-        String password = "";
+        String username = "Ahmed";
+        String password = "00000";
         boolean expResult = false;
         boolean result = DatabaseUtils.authenticate(username, password);
         assertEquals(expResult, result);
@@ -53,30 +53,6 @@ public class DatabaseUtilsTest {
         //fail("The test case is a prototype.");
     }
     
-    @org.junit.Test
-     public void testAuthenticate2() {
-        System.out.println("authenticate");
-        String username = "Ahmed";
-        String password = "25";
-        boolean expResult = false;
-        boolean result = DatabaseUtils.authenticate(username, password);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-    }
-     
-     @org.junit.Test
-      public void testAuthenticate3() {
-        System.out.println("authenticate");
-        String username = "amostafa";
-        String password = "ahmed12345";
-        boolean expResult = true;
-        boolean result = DatabaseUtils.authenticate(username, password);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-    }
-
     /**
      * Test of addUser method, of class DatabaseUtils.
      */
